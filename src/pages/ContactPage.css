@@ -1,0 +1,241 @@
+.contact-page {
+    font-family: "Poppins", sans-serif;
+    background-color: #f9f6f0;
+    padding: 40px 0;
+    min-height: 100vh;
+  }
+  
+  .contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .contact-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .contact-header h1 {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 10px;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 15px;
+  }
+  
+  .contact-header h1::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background-color: #c22126;
+  }
+  
+  .contact-header p {
+    font-size: 16px;
+    color: #666;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 40px;
+  }
+  
+  /* Contact Info Section */
+  .contact-info-section {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+  }
+  
+  .contact-info-container {
+    padding: 30px;
+  }
+  
+  .contact-info-container h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 25px;
+    position: relative;
+    padding-bottom: 10px;
+  }
+  
+  .contact-info-container h2::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: #c22126;
+  }
+  
+  .contact-info-item {
+    display: flex;
+    margin-bottom: 25px;
+  }
+  
+  .contact-icon {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(194, 33, 38, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    color: #c22126;
+  }
+  
+  .contact-info-text h3 {
+    font-size: 18px;
+    color: #333;
+    margin: 0 0 5px 0;
+  }
+  
+  .contact-info-text p {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+  }
+  
+  .contact-social {
+    margin-top: 30px;
+  }
+  
+  .contact-social h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .social-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #f5f5f5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    transition: all 0.3s;
+  }
+  
+  .social-icon:hover {
+    background-color: #c22126;
+    color: white;
+  }
+  
+  .whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #25d366;
+    color: white;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    margin-top: 25px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+    font-size: 13px;
+    width: auto;
+    max-width: 250px;
+  }
+  
+  /* Map Section */
+  .map-section {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .map-section h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
+    display: inline-block;
+  }
+  
+  .map-section h2::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: #c22126;
+  }
+  
+  .map-container {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    flex-grow: 1;
+    min-height: 450px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 992px) {
+    .contact-layout {
+      grid-template-columns: 1fr;
+    }
+  
+    .map-section {
+      height: 500px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .contact-header h1 {
+      font-size: 28px;
+    }
+  
+    .contact-info-container {
+      padding: 20px;
+    }
+  
+    .contact-icon {
+      width: 40px;
+      height: 40px;
+    }
+  
+    .map-section {
+      padding: 15px;
+      height: 450px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .contact-header h1 {
+      font-size: 24px;
+    }
+  
+    .map-section {
+      padding: 12px;
+      height: 400px;
+    }
+  }
+  

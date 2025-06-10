@@ -1,0 +1,337 @@
+.bestsell-prod-section {
+  padding: 60px 0 60px;
+  background-color: #f9f6f0;
+  margin-top: 0;
+}
+
+.bestsell-prod-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+
+
+.bestsell-prod-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.bestsell-prod-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.bestsell-prod-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background-color: #c22126;
+}
+
+.bestsell-prod-view-all {
+  color: #c22126;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.bestsell-prod-view-all:hover {
+  color: #a51d21;
+  text-decoration: underline;
+}
+
+/* Carousel */
+.bestsell-prod-carousel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.bestsell-prod-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white;
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s;
+}
+
+.bestsell-prod-carousel-arrow:hover {
+  background-color: #f5f5f5;
+}
+
+.bestsell-prod-carousel-prev {
+  left: -15px;
+}
+
+.bestsell-prod-carousel-next {
+  right: -15px;
+}
+
+.bestsell-prod-grid {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 10px 5px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  gap: 20px;
+  scroll-snap-type: x mandatory;
+}
+
+.bestsell-prod-grid::-webkit-scrollbar {
+  display: none;
+}
+
+/* Product Card */
+.bestsell-card-product-card {
+  background-color: white;
+  border-radius: 8px;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+  overflow: hidden;
+  flex: 0 0 280px;
+  width: 280px;
+  height: 400px;
+  scroll-snap-align: start;
+}
+
+.bestsell-card-product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.bestsell-card-sale-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background-color: #c22126;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 4px;
+  z-index: 2;
+}
+
+.bestsell-card-image-container {
+  position: relative;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.bestsell-card-product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+
+.bestsell-card-product-card:hover .bestsell-card-product-image {
+  transform: scale(1.05);
+}
+
+.bestsell-card-quantity-badge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 4px 0 0 0;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Info Block */
+.bestsell-card-product-info {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.bestsell-card-product-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  margin: 0 0 8px;
+  line-height: 1.4;
+  height: 44px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.bestsell-card-product-category {
+  font-size: 12px;
+  color: #666;
+  background-color: #f5f5f5;
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Pricing */
+.bestsell-card-product-price {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.bestsell-card-current-price {
+  font-size: 18px;
+  font-weight: 600;
+  color: black;
+}
+
+.bestsell-card-original-price {
+  font-size: 14px;
+  color: #999;
+  text-decoration: line-through;
+}
+
+/* Buttons */
+.bestsell-card-product-actions {
+  margin-top: auto;
+}
+
+.bestsell-card-button-group {
+  display: flex;
+  gap: 8px;
+  flex-direction: row;
+}
+
+.bestsell-card-add-to-cart-btn,
+.bestsell-card-buy-now-btn {
+  flex: 1;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 0;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.bestsell-card-add-to-cart-btn {
+  background-color: #c22126;
+  color: white;
+}
+
+.bestsell-card-add-to-cart-btn:hover {
+  background-color: #a51d21;
+  transform: translateY(-2px);
+}
+
+.bestsell-card-buy-now-btn {
+  background-color: #2e8b57;
+  color: white;
+}
+
+.bestsell-card-buy-now-btn:hover {
+  background-color: #267349;
+  transform: translateY(-2px);
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .bestsell-prod-carousel-arrow {
+    width: 36px;
+    height: 36px;
+  }
+
+  .bestsell-card-product-card {
+    flex: 0 0 260px;
+    width: 260px;
+    height: auto;
+  }
+
+  .bestsell-card-image-container {
+    height: 160px;
+  }
+
+  .bestsell-prod-title {
+    font-size: 20px;
+    max-width: 70%;
+  }
+}
+
+@media (max-width: 480px) {
+  .bestsell-prod-carousel-arrow {
+    width: 32px;
+    height: 32px;
+  }
+
+  .bestsell-card-product-card {
+    flex: 0 0 220px;
+    width: 220px;
+    height: auto;
+  }
+
+  .bestsell-card-product-info {
+    padding: 14px;
+  }
+
+  .bestsell-card-product-name {
+    font-size: 14px;
+  }
+
+  .bestsell-card-current-price {
+    font-size: 16px;
+  }
+
+  .bestsell-card-original-price {
+    font-size: 12px;
+  }
+
+  .bestsell-card-button-group {
+    gap: 6px;
+  }
+
+  .bestsell-card-add-to-cart-btn,
+  .bestsell-card-buy-now-btn {
+    font-size: 10px;
+    padding: 8px 0;
+  }
+
+  .bestsell-card-product-price {
+    margin-bottom: 10px;
+  }
+
+  .bestsell-card-product-actions {
+    margin-top: 6px;
+  }
+}

@@ -1,0 +1,148 @@
+/* Admin Layout */
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #f5f5f5; /* Base background for the whole layout */
+}
+
+/* Sidebar */
+.admin-sidebar {
+  width: 250px;
+  background-color: white; /* Changed to white background */
+  color: #333; /* Adjusted text color for white background */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 100;
+  transition: transform 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05); /* Added subtle shadow */
+}
+
+.admin-sidebar-header {
+  padding: 20px;
+  border-bottom: 1px solid #eee; /* Lighter border for white background */
+}
+
+.admin-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #333; /* Adjusted logo text color */
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.admin-logo .icon {
+  font-size: 24px;
+  color: #e74c3c; /* Keep logo icon color distinct */
+}
+
+.admin-sidebar-content {
+  flex: 1;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.admin-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  color: #666; /* Adjusted nav item text color */
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.admin-nav-item:hover {
+  background-color: #f0f0f0; /* Lighter hover background */
+  color: #333; /* Darker text on hover */
+}
+
+.admin-nav-item.active {
+  background-color: #e74c3c; /* Solid red background for active item */
+  color: white; /* White text on red background */
+  border-left: 4px solid #e74c3c; /* Red border for active item */
+}
+
+.admin-nav-item .icon {
+  font-size: 20px;
+  color: inherit; /* Inherit color from parent for icons */
+}
+
+.admin-sidebar-footer {
+  padding: 20px;
+  border-top: 1px solid #eee; /* Lighter border for white background */
+}
+
+.admin-logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #666; /* Adjusted logout button text color */
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.admin-logout-btn:hover {
+  background-color: #f0f0f0; /* Lighter hover background */
+  color: #333; /* Darker text on hover */
+}
+
+/* Main Content */
+.admin-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: white; /* White background for content */
+  /* Removed background-image properties */
+}
+
+/* Mobile Toggle */
+.mobile-toggle {
+  display: none;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  background-color: #2c3e50; /* Keep dark for contrast */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .admin-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .admin-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .mobile-toggle {
+    display: flex;
+  }
+
+  .admin-content {
+    margin-left: 0;
+    padding-top: 60px;
+  }
+}
