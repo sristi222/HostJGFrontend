@@ -753,3 +753,19 @@
   }
 }
 
+/* Add these styles to your existing CartPage.css */
+
+.cart-item-unit {
+  margin: 4px 0 8px 0;
+}
+
+.unit-badge {
+  background-color: #f3f4f6;
+  color: #374151;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid #e5e7eb;
+  display: inline-block;
+}

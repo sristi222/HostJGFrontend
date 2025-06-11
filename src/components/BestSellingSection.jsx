@@ -31,7 +31,26 @@ function BestSellingSection() {
 
   const handleAddToCart = (product, e) => {
     e.stopPropagation()
-    addToCart({ ...product, quantity: 1 })
+
+    // ✅ Normalized quantity option for cart key consistency
+    const selectedQuantityOption = {
+      amount: String(product.defaultQuantity || "1").trim(),
+      unit: String(product.unit || "kg").trim().toLowerCase(),
+      price: Number(product.price),
+    }
+
+    const cartProduct = {
+      ...product,
+      quantity: 1,
+      selectedQuantityOption,
+    }
+
+    console.log("🛒 Adding from BestSellingSection:", {
+      name: product.name,
+      selectedQuantityOption,
+    })
+
+    addToCart(cartProduct)
   }
 
   const handleBuyNow = (productId, e) => {
@@ -107,12 +126,16 @@ function BestSellingSection() {
               const quantityDisplay = getDefaultQuantityDisplay(product)
 
               return (
-                <div className="bestsell-card-product-card" key={product._id} onClick={() => navigateToProduct(product._id)}>
+                <div
+                  className="bestsell-card-product-card"
+                  key={product._id}
+                  onClick={() => navigateToProduct(product._id)}
+                >
                   {product.onSale && <div className="bestsell-card-sale-tag">SALE</div>}
 
                   <div className="bestsell-card-image-container">
                     <img
-                      src={getImageUrl(product)}
+                      src={getImageUrl(product) || "/placeholder.svg"}
                       alt={product.name}
                       className="bestsell-card-product-image"
                       width="200"
@@ -123,7 +146,10 @@ function BestSellingSection() {
                         e.target.src = "/placeholder.svg"
                       }}
                     />
-                    <div className="bestsell-card-quantity-badge" style={{ backgroundColor: product.color || "#6b7280" }}>
+                    <div
+                      className="bestsell-card-quantity-badge"
+                      style={{ backgroundColor: product.color || "#6b7280" }}
+                    >
                       {quantityDisplay}
                     </div>
                   </div>

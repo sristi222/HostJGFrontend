@@ -8,20 +8,42 @@ function ProductCard({ product }) {
   const navigate = useNavigate()
 
   const handleAddToCart = (e) => {
-    e.stopPropagation()
-    addToCart({ ...product, quantity: 1 })
+  e.stopPropagation()
+
+  const defaultOption = {
+    amount: product.defaultQuantity || "1",
+    unit: product.unit || "kg",
+    price: product.price,
+    isDefault: true,
   }
 
-  const navigateToProduct = () => {
-    const id = product._id || product.id
-    navigate(`/product/${id}`)
+  addToCart({
+    ...product,
+    quantity: 1,
+    selectedQuantityOption: defaultOption,
+    finalPrice: (product.onSale || product.sale) && product.salePrice ? product.salePrice : product.price,
+  })
+}
+
+const handleBuyNow = (e) => {
+  e.stopPropagation()
+
+  const defaultOption = {
+    amount: product.defaultQuantity || "1",
+    unit: product.unit || "kg",
+    price: product.price,
+    isDefault: true,
   }
 
-  const handleBuyNow = (e) => {
-    e.stopPropagation()
-    addToCartSilently({ ...product, quantity: 1 })
-    navigate("/checkout")
-  }
+  addToCartSilently({
+    ...product,
+    quantity: 1,
+    selectedQuantityOption: defaultOption,
+    finalPrice: (product.onSale || product.sale) && product.salePrice ? product.salePrice : product.price,
+  })
+
+  navigate("/checkout")
+}
 
   const getSafeName = () => (typeof product.name === "object" ? product.name.name : product.name)
 
@@ -55,6 +77,10 @@ function ProductCard({ product }) {
     // Final fallback
     return "1 kg"
   }
+  const navigateToProduct = () => {
+  const id = product._id || product.id
+  navigate(`/product/${id}`)
+}
 
   const getImageUrl = () => {
     const raw = product.image || product.imageUrl || ""

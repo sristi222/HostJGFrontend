@@ -17,7 +17,6 @@ function EditProduct() {
     category: "",
     subcategory: "",
     price: "",
-    costPrice: "",
     // Default quantity (shown on cards)
     unit: "kg",
     defaultQuantity: "1",
@@ -324,18 +323,8 @@ function EditProduct() {
 
             <div className="form-row">
               <div className="form-group">
-                <label htmlFor="price">Base Price*</label>
+                <label htmlFor="price">Price*</label>
                 <input type="number" id="price" name="price" value={formData.price} onChange={handleChange} required />
-              </div>
-              <div className="form-group">
-                <label htmlFor="costPrice">Cost Price</label>
-                <input
-                  type="number"
-                  id="costPrice"
-                  name="costPrice"
-                  value={formData.costPrice}
-                  onChange={handleChange}
-                />
               </div>
             </div>
 
@@ -394,7 +383,7 @@ function EditProduct() {
                   {formData.customQuantityOptions.map((option, index) => (
                     <div key={index} className="custom-option-row">
                       <div className="form-group">
-                        <label>Amount</label>
+                        <label>Quantity</label>
                         <input
                           type="text"
                           value={option.amount}

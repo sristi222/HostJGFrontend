@@ -17,39 +17,9 @@ function CartSidebar() {
     removeFromCart,
     getCartItemDisplay,
   } = useCart()
+
   const sidebarRef = useRef(null)
 
-  // ✅ Normalize image path
-  const getImageUrl = (image) => {
-    if (!image) return "/placeholder.svg"
-    if (image.startsWith("http")) return image
-    if (image.startsWith("/uploads/")) return `http://localhost:5000${image}`
-    return `http://localhost:5000/uploads/${image.replace(/^.*[\\/]/, "")}`
-  }
-
-  // Helper to get the correct price for display (considering selected quantity option)
-  const getItemPrice = (item) => {
-    // Use finalPrice if available (from quantity option selection)
-    if (item.finalPrice) {
-      return item.finalPrice
-    }
-
-    // Fallback to regular price logic
-    if ((item.onSale || item.sale) && item.salePrice) {
-      return item.salePrice
-    }
-    return item.price
-  }
-
-  // Helper to get original price if item is on sale
-  const getOriginalPrice = (item) => {
-    if ((item.onSale || item.sale) && item.salePrice) {
-      return item.price
-    }
-    return item.originalPrice
-  }
-
-  // ✅ Close sidebar on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
@@ -66,37 +36,46 @@ function CartSidebar() {
     }
   }, [showCartSidebar, closeCartSidebar])
 
-  // Add this useEffect after the existing useEffect for click outside
   useEffect(() => {
     if (showCartSidebar) {
-      // Prevent body scroll when sidebar is open
       document.body.classList.add("cart-sidebar-open")
       document.body.style.overflow = "hidden"
     } else {
-      // Restore body scroll when sidebar is closed
       document.body.classList.remove("cart-sidebar-open")
       document.body.style.overflow = "unset"
     }
-
-    // Cleanup on unmount
     return () => {
       document.body.classList.remove("cart-sidebar-open")
       document.body.style.overflow = "unset"
     }
   }, [showCartSidebar])
 
-  if (!showCartSidebar) {
-    return null
+  const getImageUrl = (image) => {
+    if (!image) return "/placeholder.svg"
+    if (image.startsWith("http")) return image
+    if (image.startsWith("/uploads/")) return `http://localhost:5000${image}`
+    return `http://localhost:5000/uploads/${image.replace(/^.*[\\/]/, "")}`
   }
+
+  const getItemPrice = (item) => {
+    if (item.finalPrice) return item.finalPrice
+    if ((item.onSale || item.sale) && item.salePrice) return item.salePrice
+    return item.price
+  }
+
+  const getOriginalPrice = (item) => {
+    if ((item.onSale || item.sale) && item.salePrice) return item.price
+    return item.originalPrice
+  }
+
+  if (!showCartSidebar) return null
 
   return (
     <div className="cart-sidebar-overlay">
       <div className="cart-sidebar" ref={sidebarRef}>
         <div className="cart-sidebar-header">
           <h3>Shopping Cart</h3>
-          <button className="cart-sidebar-close" onClick={closeCartSidebar}>
-            ×
-          </button>
+          <button className="cart-sidebar-close" onClick={closeCartSidebar}>×</button>
         </div>
 
         <div className="cart-sidebar-content">
@@ -107,11 +86,9 @@ function CartSidebar() {
                 "{lastAddedItem.name}"
                 {lastAddedItem.selectedQuantityOption && (
                   <span className="added-option">
-                    {" "}
-                    ({lastAddedItem.selectedQuantityOption.amount} {lastAddedItem.selectedQuantityOption.unit})
+                    {" "}({lastAddedItem.selectedQuantityOption.amount} {lastAddedItem.selectedQuantityOption.unit})
                   </span>
-                )}{" "}
-                added to cart
+                )} added to cart
               </span>
             </div>
           )}
@@ -123,7 +100,9 @@ function CartSidebar() {
           ) : (
             <div className="cart-sidebar-items">
               {cart.map((item) => {
-                const itemKey = item.cartItemKey || item.id || item._id
+                if (!item.cartItemKey) return null
+
+                const itemKey = item.cartItemKey
                 const currentPrice = getItemPrice(item)
                 const originalPrice = getOriginalPrice(item)
                 const isOnSale = (item.onSale || item.sale) && item.salePrice
@@ -137,10 +116,7 @@ function CartSidebar() {
                       <img
                         src={getImageUrl(item.image || item.imageUrl)}
                         alt={item.name}
-                        onError={(e) => {
-                          e.target.onerror = null
-                          e.target.src = "/placeholder.svg"
-                        }}
+                        onError={(e) => { e.target.onerror = null; e.target.src = "/placeholder.svg" }}
                         style={{ objectFit: "cover", width: "100%", height: "100%" }}
                       />
                     </div>
@@ -148,15 +124,13 @@ function CartSidebar() {
                     <div className="cart-sidebar-item-details">
                       <h4>{item.name}</h4>
 
-                      {/* Display selected quantity option */}
-                      {item.customQuantityOptions?.length > 0 && item.selectedQuantityOption && (
-  <div className="cart-sidebar-item-option">
-    <span className="sidebar-option-badge">
-      {item.selectedQuantityOption.amount} {item.selectedQuantityOption.unit}
-    </span>
-  </div>
-)}
-
+                      {item.selectedQuantityOption && (
+                        <div className="cart-sidebar-item-option">
+                          <span className="sidebar-option-badge">
+                            {item.selectedQuantityOption.amount} {item.selectedQuantityOption.unit}
+                          </span>
+                        </div>
+                      )}
 
                       <div className="cart-sidebar-item-price">
                         <span className="current-price">NRs. {currentPrice}</span>
@@ -174,7 +148,10 @@ function CartSidebar() {
                           -
                         </button>
                         <span className="quantity">{item.quantity}</span>
-                        <button className="quantity-btn" onClick={() => updateQuantity(itemKey, item.quantity + 1)}>
+                        <button
+                          className="quantity-btn"
+                          onClick={() => updateQuantity(itemKey, item.quantity + 1)}
+                        >
                           +
                         </button>
                       </div>
@@ -182,7 +159,11 @@ function CartSidebar() {
 
                     <div className="cart-sidebar-item-actions">
                       <div className="item-total">NRs. {currentPrice * item.quantity}</div>
-                      <button className="remove-item-btn" onClick={() => removeFromCart(itemKey)} title="Remove item">
+                      <button
+                        className="remove-item-btn"
+                        onClick={() => removeFromCart(itemKey)}
+                        title="Remove item"
+                      >
                         ×
                       </button>
                     </div>

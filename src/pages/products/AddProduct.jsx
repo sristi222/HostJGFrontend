@@ -15,7 +15,6 @@ function AddProductEnhanced() {
     category: "",
     subcategory: "",
     price: "",
-    costPrice: "",
     // Default quantity (shown on cards)
     unit: "kg",
     defaultQuantity: "1",
@@ -246,40 +245,32 @@ function AddProductEnhanced() {
               <div className="form-group">
                 <label htmlFor="subcategory">Subcategory*</label>
                 <select
-                  id="subcategory"
-                  name="subcategory"
-                  value={formData.subcategory}
-                  onChange={handleChange}
-                  disabled={!formData.category}
-                >
-                  <option value="">Select Subcategory</option>
-                  {formData.category &&
-                    categories
-                      .find((cat) => cat._id === formData.category)
-                      ?.subcategories?.map((subcat) => (
-                        <option key={subcat._id} value={subcat._id}>
-                          {subcat.name}
-                        </option>
-                      ))}
-                </select>
+  id="subcategory"
+  name="subcategory"
+  value={formData.subcategory}
+  onChange={handleChange}
+  disabled={!formData.category}
+>
+  <option value="">Select Subcategory (optional)</option>
+  {formData.category &&
+    categories
+      .find((cat) => cat._id === formData.category)
+      ?.subcategories?.map((subcat) => (
+        <option key={subcat._id} value={subcat._id}>
+          {subcat.name}
+        </option>
+      ))}
+</select>
+
               </div>
             </div>
 
             <div className="form-row">
               <div className="form-group">
-                <label htmlFor="price">Base Price*</label>
+                <label htmlFor="price">Price*</label>
                 <input type="number" id="price" name="price" value={formData.price} onChange={handleChange} required />
               </div>
-              <div className="form-group">
-                <label htmlFor="costPrice">Cost Price</label>
-                <input
-                  type="number"
-                  id="costPrice"
-                  name="costPrice"
-                  value={formData.costPrice}
-                  onChange={handleChange}
-                />
-              </div>
+              
             </div>
 
             {/* Default Quantity Section (shown on cards) */}
@@ -337,7 +328,7 @@ function AddProductEnhanced() {
                   {formData.customQuantityOptions.map((option, index) => (
                     <div key={index} className="custom-option-row">
                       <div className="form-group">
-                        <label>Amount</label>
+                        <label>Quantity</label>
                         <input
                           type="text"
                           value={option.amount}

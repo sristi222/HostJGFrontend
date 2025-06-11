@@ -1,10 +1,22 @@
+// Final merged CartPage.jsx file
+
 "use client"
+
 import { Link, useNavigate } from "react-router-dom"
 import { useCart } from "../context/CartContext"
 import "./CartPage.css"
 
 function CartPage() {
-  const { cart, cartTotal, cartCount, updateQuantity, removeFromCart, clearCart, getCartItemDisplay } = useCart()
+  const {
+    cart,
+    cartTotal,
+    cartCount,
+    updateQuantity,
+    removeFromCart,
+    clearCart,
+    getCartItemDisplay
+  } = useCart()
+
   const navigate = useNavigate()
 
   const formatDate = () => {
@@ -13,7 +25,7 @@ function CartPage() {
       weekday: "short",
       month: "short",
       day: "2-digit",
-      year: "numeric",
+      year: "numeric"
     })
   }
 
@@ -21,7 +33,6 @@ function CartPage() {
     navigate("/checkout")
   }
 
-  // Helper to get image URL with proper fallbacks
   const getImageUrl = (image) => {
     if (!image) return "/placeholder.svg"
     if (image.startsWith("http")) return image
@@ -29,29 +40,17 @@ function CartPage() {
     return `http://localhost:5000/uploads/${image.replace(/^.*[\\/]/, "")}`
   }
 
-  // Helper to get the correct price for display (considering selected quantity option)
   const getItemPrice = (item) => {
-    // Use finalPrice if available (from quantity option selection)
-    if (item.finalPrice) {
-      return item.finalPrice
-    }
-
-    // Fallback to regular price logic
-    if ((item.onSale || item.sale) && item.salePrice) {
-      return item.salePrice
-    }
+    if (item.finalPrice) return item.finalPrice
+    if ((item.onSale || item.sale) && item.salePrice) return item.salePrice
     return item.price
   }
 
-  // Helper to get original price if item is on sale
   const getOriginalPrice = (item) => {
-    if ((item.onSale || item.sale) && item.salePrice) {
-      return item.price
-    }
+    if ((item.onSale || item.sale) && item.salePrice) return item.price
     return item.originalPrice
   }
 
-  // Calculate total savings
   const totalSavings = cart.reduce((savings, item) => {
     const originalPrice = getOriginalPrice(item)
     const currentPrice = getItemPrice(item)
@@ -61,16 +60,10 @@ function CartPage() {
     return savings
   }, 0)
 
-  // Calculate discounted total
-  const calculateDiscountedTotal = () => {
-    return cart.reduce((total, item) => {
-      const currentPrice = getItemPrice(item)
-      return total + currentPrice * item.quantity
-    }, 0)
-  }
-
-  // Update the cart summary section to use the discounted total
-  const discountedTotal = calculateDiscountedTotal()
+  const discountedTotal = cart.reduce((total, item) => {
+    const currentPrice = getItemPrice(item)
+    return total + currentPrice * item.quantity
+  }, 0)
 
   if (cart.length === 0) {
     return (
@@ -82,20 +75,10 @@ function CartPage() {
           </div>
           <div className="empty-cart">
             <div className="empty-cart-icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="64"
-                height="64"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <circle cx="9" cy="21" r="1"></circle>
-                <circle cx="20" cy="21" r="1"></circle>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+              <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="9" cy="21" r="1" />
+                <circle cx="20" cy="21" r="1" />
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
               </svg>
             </div>
             <p>Your shopping list is empty</p>
@@ -127,11 +110,12 @@ function CartPage() {
 
             <div className="cart-items">
               {cart.map((item) => {
-                const itemKey = item.cartItemKey || item.id || item._id
+                const itemKey = item.cartItemKey
+                if (!itemKey) return null
+
                 const currentPrice = getItemPrice(item)
                 const originalPrice = getOriginalPrice(item)
                 const isOnSale = (item.onSale || item.sale) && item.salePrice
-                const displayInfo = getCartItemDisplay(item)
 
                 return (
                   <div className="cart-item" key={itemKey}>
@@ -139,6 +123,7 @@ function CartPage() {
                     <button className="cart-remove-btn" onClick={() => removeFromCart(itemKey)}>
                       ×
                     </button>
+
                     <div className="cart-item-image">
                       <img
                         src={getImageUrl(item.image || item.imageUrl)}
@@ -150,18 +135,17 @@ function CartPage() {
                         style={{ objectFit: "cover", width: "100%", height: "100%" }}
                       />
                     </div>
+
                     <div className="cart-item-details">
                       <h4>{item.name}</h4>
 
-                      {/* Display selected quantity option */}
-                      {item.customQuantityOptions?.length > 0 && item.selectedQuantityOption && (
-  <div className="cart-item-option">
-    <span className="option-badge">
-      {item.selectedQuantityOption.amount} {item.selectedQuantityOption.unit}
-    </span>
-  </div>
-)}
-
+                      {item.selectedQuantityOption && (
+                        <div className="cart-item-option">
+                          <span className="option-badge">
+                            {item.selectedQuantityOption.amount} {item.selectedQuantityOption.unit}
+                          </span>
+                        </div>
+                      )}
 
                       <div className="cart-item-price-container">
                         <p className="cart-item-price">NRs. {currentPrice}</p>
@@ -169,17 +153,16 @@ function CartPage() {
                           <p className="cart-item-original-price">NRs. {originalPrice}</p>
                         )}
                       </div>
+
                       <div className="cart-quantity-selector">
-                        <button
-                          onClick={() => updateQuantity(itemKey, item.quantity - 1)}
-                          disabled={item.quantity <= 1}
-                        >
+                        <button onClick={() => updateQuantity(itemKey, item.quantity - 1)} disabled={item.quantity <= 1}>
                           -
                         </button>
                         <span>{item.quantity}</span>
                         <button onClick={() => updateQuantity(itemKey, item.quantity + 1)}>+</button>
                       </div>
                     </div>
+
                     <div className="cart-item-total">
                       <span className="cart-item-total-price">NRs. {currentPrice * item.quantity}</span>
                       {originalPrice && originalPrice > currentPrice && (
@@ -198,12 +181,8 @@ function CartPage() {
             </div>
 
             <div className="cart-actions">
-              <Link to="/" className="shop-more-btn">
-                Shop More
-              </Link>
-              <button className="clear-cart-btn" onClick={clearCart}>
-                Clear Cart
-              </button>
+              <Link to="/" className="shop-more-btn">Shop More</Link>
+              <button className="clear-cart-btn" onClick={clearCart}>Clear Cart</button>
             </div>
           </div>
 
@@ -212,21 +191,25 @@ function CartPage() {
               <h3>Order Summary</h3>
               <p className="summary-items-count">{cartCount} items in cart</p>
             </div>
+
             <div className="summary-content">
               <div className="summary-row">
                 <span>Subtotal ({cartCount} items)</span>
                 <span>NRs. {discountedTotal}</span>
               </div>
+
               {totalSavings > 0 && (
                 <div className="summary-row savings-row">
                   <span>Total Savings</span>
                   <span className="savings-amount">-NRs. {totalSavings}</span>
                 </div>
               )}
+
               <div className="summary-total">
                 <span>Total</span>
                 <span>NRs. {discountedTotal}</span>
               </div>
+
               <button className="checkout-btn" onClick={handleProceedToCheckout}>
                 Proceed to Checkout ({cartCount} items)
               </button>

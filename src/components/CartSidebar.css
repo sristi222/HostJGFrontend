@@ -486,3 +486,23 @@ body.cart-sidebar-open {
     font-size: 11px;
   }
 }
+/* Add these styles to your existing CartSidebar.css */
+
+.cart-sidebar-item-unit {
+  margin: 4px 0;
+}
+
+.sidebar-unit-badge {
+  background-color: #f3f4f6;
+  color: #374151;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid #e5e7eb;
+}
+
+.last-added-notification .added-option {
+  color: #6b7280;
+  font-weight: 500;
+}
