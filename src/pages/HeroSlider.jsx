@@ -20,7 +20,7 @@ function HeroSlider() {
   useEffect(() => {
     const fetchSlides = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/hero-slides")
+        const res = await axios.get("https://jgenterprisebackend.onrender.com/api/hero-slides")
         if (res.data.success) {
           setSlides(res.data.slides)
         }
@@ -59,7 +59,7 @@ function HeroSlider() {
       Object.entries(newSlide).forEach(([key, val]) => {
         if (key !== "imagePreview") formData.append(key, val)
       })
-      const res = await axios.post("http://localhost:5000/api/hero-slides", formData, {
+      const res = await axios.post("https://jgenterprisebackend.onrender.com/api/hero-slides", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       if (res.data.success) {
@@ -78,7 +78,7 @@ function HeroSlider() {
       Object.entries(editingSlide).forEach(([key, val]) => {
         if (key !== "imagePreview") formData.append(key, val)
       })
-      const res = await axios.put(`http://localhost:5000/api/hero-slides/${editingSlide._id}`, formData, {
+      const res = await axios.put(`https://jgenterprisebackend.onrender.com/api/hero-slides/${editingSlide._id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       if (res.data.success) {
@@ -93,7 +93,7 @@ function HeroSlider() {
   const handleDeleteSlide = async (id) => {
     if (!window.confirm("Delete this slide?")) return
     try {
-      await axios.delete(`http://localhost:5000/api/hero-slides/${id}`)
+      await axios.delete(`https://jgenterprisebackend.onrender.com/api/hero-slides/${id}`)
       setSlides((prev) => prev.filter((s) => s._id !== id))
     } catch (err) {
       console.error("Delete failed:", err)
@@ -107,7 +107,7 @@ function HeroSlider() {
     formData.append("subtitle", target.subtitle || "")
     formData.append("active", (!target.active).toString())
     try {
-      await axios.put(`http://localhost:5000/api/hero-slides/${id}`, formData, {
+      await axios.put(`https://jgenterprisebackend.onrender.com/api/hero-slides/${id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       setSlides((prev) => prev.map((s) => (s._id === id ? { ...s, active: !s.active } : s)))
@@ -124,7 +124,7 @@ function HeroSlider() {
     ;[newSlides[idx], newSlides[targetIdx]] = [newSlides[targetIdx], newSlides[idx]]
     const orderList = newSlides.map((s) => s._id)
     try {
-      await axios.post("http://localhost:5000/api/hero-slides/reorder", { orderList })
+      await axios.post("https://jgenterprisebackend.onrender.com/api/hero-slides/reorder", { orderList })
       newSlides.forEach((s, i) => (s.order = i + 1))
       setSlides(newSlides)
     } catch (err) {
