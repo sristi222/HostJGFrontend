@@ -12,7 +12,7 @@ function HeroSection() {
   useEffect(() => {
     const fetchSlides = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/hero-slides")
+        const res = await axios.get("https://jgenterprisebackend.onrender.com/api/hero-slides")
         if (res.data.success) {
           const activeSlides = res.data.slides.filter((slide) => slide.active)
           setSlides(activeSlides)
