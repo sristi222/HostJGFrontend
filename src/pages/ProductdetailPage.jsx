@@ -22,7 +22,7 @@ function ProductDetailPage() {
     const fetchProduct = async () => {
       setLoading(true)
       try {
-        const res = await fetch(`http://localhost:5000/api/products/${productId}`)
+        const res = await fetch(`https://jgenterprisebackend.onrender.com/api/products/${productId}`)
         const data = await res.json()
         if (res.ok) {
           setProduct(data)
@@ -41,7 +41,7 @@ function ProductDetailPage() {
 
     const fetchSimilarProducts = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/products/similar/${productId}`)
+        const res = await fetch(`https://jgenterprisebackend.onrender.com/api/products/similar/${productId}`)
         const data = await res.json()
         if (res.ok) {
           setSimilarProducts(data)
@@ -63,8 +63,8 @@ function ProductDetailPage() {
   const getImageUrl = (path) => {
     if (!path) return "/placeholder.svg"
     if (path.startsWith("http")) return path
-    if (path.startsWith("/uploads/")) return `http://localhost:5000${path}`
-    return `http://localhost:5000/uploads/${path.replace(/^.*[\\/]/, "")}`
+    if (path.startsWith("/uploads/")) return `https://jgenterprisebackend.onrender.com${path}`
+    return `https://jgenterprisebackend.onrender.com/uploads/${path.replace(/^.*[\\/]/, "")}`
   }
 
   const getSafe = (value, field = "name") => {
