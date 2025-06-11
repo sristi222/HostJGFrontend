@@ -177,7 +177,7 @@ function CartPage() {
             </div>
 
             <div className="cart-notes">
-              <p>* Unconfirmed list item not priced.</p>
+              <p>* Please review your cart before proceeding to checkout.</p>
             </div>
 
             <div className="cart-actions">
