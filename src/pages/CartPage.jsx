@@ -36,8 +36,8 @@ function CartPage() {
   const getImageUrl = (image) => {
     if (!image) return "/placeholder.svg"
     if (image.startsWith("http")) return image
-    if (image.startsWith("/uploads/")) return `http://localhost:5000${image}`
-    return `http://localhost:5000/uploads/${image.replace(/^.*[\\/]/, "")}`
+    if (image.startsWith("/uploads/")) return `https://jgenterprisebackend.onrender.com${image}`
+    return `https://jgenterprisebackend.onrender.com/uploads/${image.replace(/^.*[\\/]/, "")}`
   }
 
   const getItemPrice = (item) => {
