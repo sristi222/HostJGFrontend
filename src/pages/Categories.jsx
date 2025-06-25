@@ -19,7 +19,7 @@ function Categories() {
 
   const fetchCategories = async () => {
     try {
-      const res = await fetch("import.meta.env.VITE_API_BASE_URL/api/categories")
+      const res = await fetch("https://jgenterprisebackend.onrender.com/api/categories")
       if (!res.ok) throw new Error("Failed to load categories")
       const data = await res.json()
       setCategories(data.sort((a, b) => a.name.localeCompare(b.name)))
