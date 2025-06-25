@@ -122,14 +122,14 @@ function ContactPage() {
             <h2>Find Us</h2>
             <div className="map-container">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.2585067291367!2d85.31004531506156!3d27.711958982790663!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19a7c6cd102b%3A0x78049640e9291e1b!2sBhedasingh%2C%20Kathmandu%2044600!5e0!3m2!1sen!2snp!4v1620120000000!5m2!1sen!2snp"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
+  title="Shop Location"
+  width="100%"
+  height="100%"
+  style={{ border: 0 }}
+  loading="lazy"
+  allowFullScreen
+  referrerPolicy="no-referrer-when-downgrade"
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d299.6070777350183!2d85.30944906148522!3d27.706854062666604!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19c2f7450703%3A0xfab20cf918bdf0b2!2sDapxy!5e0!3m2!1sen!2snp!4v1744653628622!5m2!1sen!2snp"></iframe>"
             </div>
           </div>
         </div>
