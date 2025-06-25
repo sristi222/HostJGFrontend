@@ -47,7 +47,7 @@ function EditProduct() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/categories")
+        const res = await fetch("https://jgenterprisebackend.onrender.com/api/categories")
         const data = await res.json()
         setCategories(Array.isArray(data) ? data : data.categories || [])
       } catch (err) {
@@ -61,7 +61,7 @@ function EditProduct() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/products/${id}`)
+        const res = await fetch(`https://jgenterprisebackend.onrender.com/api/products/${id}`)
         const data = await res.json()
         if (res.ok) {
           // Set default quantity if not present
