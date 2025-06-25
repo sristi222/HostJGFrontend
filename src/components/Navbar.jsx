@@ -3,21 +3,20 @@
 import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useCart } from "../context/CartContext"
-import { MenuIcon, XIcon, SearchIcon, PhoneIcon, ShoppingCartIcon } from "lucide-react" // Import Lucide icons
+import { MenuIcon, XIcon, SearchIcon, PhoneIcon, ShoppingCartIcon } from "lucide-react"
 import "./Navbar.css"
 
 function Navbar() {
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState("")
   const { cartCount } = useCart()
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false) // State for mobile menu
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [availableCategories, setAvailableCategories] = useState([])
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        // Make a real API call to fetch categories
-        const response = await fetch("https://jgenterprisebackend.onrender.com/api/categories")
+        const response = await fetch("http://localhost:5000/api/categories")
         if (!response.ok) {
           throw new Error("Failed to fetch categories")
         }
@@ -26,7 +25,6 @@ function Navbar() {
         setAvailableCategories(formatted)
       } catch (err) {
         console.error("Failed to load categories", err)
-        // Fallback to some default categories if the API call fails
         const fallbackCategories = [
           { _id: "cat1", name: "Fruits" },
           { _id: "cat2", name: "Vegetables" },
@@ -45,7 +43,7 @@ function Navbar() {
     e.preventDefault()
     if (searchQuery.trim()) {
       navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`)
-      setIsMobileMenuOpen(false) // Close mobile menu on search
+      setIsMobileMenuOpen(false)
     }
   }
 
@@ -55,7 +53,7 @@ function Navbar() {
 
   const handleNavLinkClick = () => {
     window.scrollTo(0, 0)
-    setIsMobileMenuOpen(false) // Close mobile menu when a link is clicked
+    setIsMobileMenuOpen(false)
   }
 
   return (
@@ -63,7 +61,12 @@ function Navbar() {
       <div className="grocery-main-navbar">
         <div className="grocery-container">
           <Link to="/" className="grocery-logo" onClick={handleNavLinkClick}>
-            <div className="grocery-logo-text">Dinesh Laal's Shop</div>
+            <img
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-mpNFhkKreRSUgEDGjILON9SSTQ8q9C.png"
+              alt="JG Store Logo"
+              className="grocery-logo-image"
+            />
+            <div className="grocery-logo-text">JG Store</div>
           </Link>
 
           <div className="grocery-search-container">
@@ -80,7 +83,6 @@ function Navbar() {
           </div>
 
           <div className="grocery-nav-actions">
-            {/* Desktop Nav Links */}
             <Link to="/about" className="grocery-nav-link desktop-only" onClick={handleNavLinkClick}>
               About Us
             </Link>
@@ -91,18 +93,18 @@ function Navbar() {
             <div className="grocery-order-section desktop-only">
               <PhoneIcon size={20} className="grocery-phone-icon" />
               <div className="grocery-order-text">
-    <div className="grocery-order-label">ORDER AT</div>
-    <a href="tel:+977 9841241832" className="grocery-order-number">+977 9841241832</a>
-  </div>
-</div>
+                <div className="grocery-order-label">ORDER AT</div>
+                <a href="tel:+977 9841241832" className="grocery-order-number">
+                  +977 9841241832
+                </a>
+              </div>
+            </div>
 
-            {/* Remove the entire user menu conditional block and replace with just: */}
             <Link to="/cart" className="grocery-cart-icon" onClick={handleNavLinkClick}>
               <ShoppingCartIcon size={24} />
               <span className="grocery-cart-count">{cartCount}</span>
             </Link>
 
-            {/* Mobile Menu Toggle */}
             <button className="grocery-menu-toggle mobile-only" onClick={toggleMobileMenu}>
               {isMobileMenuOpen ? <XIcon size={24} /> : <MenuIcon size={24} />}
             </button>
@@ -114,7 +116,14 @@ function Navbar() {
       {isMobileMenuOpen && (
         <div className="grocery-mobile-menu mobile-only">
           <div className="grocery-mobile-menu-header">
-            <div className="grocery-logo-text">Dinesh Laal's Shop</div>
+            <div className="grocery-logo">
+              <img
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-mpNFhkKreRSUgEDGjILON9SSTQ8q9C.png"
+                alt="JG Store"
+                className="grocery-logo-image"
+              />
+              <div className="grocery-logo-text">JG Store</div>
+            </div>
             <button onClick={toggleMobileMenu}>
               <XIcon size={24} />
             </button>
@@ -142,7 +151,9 @@ function Navbar() {
               <PhoneIcon size={20} className="grocery-phone-icon" />
               <div className="grocery-order-text">
                 <div className="grocery-order-label">ORDER AT</div>
-               <a href="tel:+977 9841241832" className="grocery-order-number">+977 9841241832</a>
+                <a href="tel:+977 9841241832" className="grocery-order-number">
+                  +977 9841241832
+                </a>
               </div>
             </div>
           </nav>
