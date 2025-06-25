@@ -21,11 +21,11 @@ function Dashboard() {
         setLoading(true)
 
         // Fetch products
-        const productsRes = await axios.get("http://localhost:5000/api/products")
+        const productsRes = await axios.get("https://jgenterprisebackend.onrender.com/api/products")
         const products = productsRes.data.success ? productsRes.data.products : []
 
         // Fetch categories
-        const categoriesRes = await axios.get("http://localhost:5000/api/categories")
+        const categoriesRes = await axios.get("hhttps://jgenterprisebackend.onrender.com/api/categories")
         const categories = categoriesRes.data.success
           ? categoriesRes.data.categories
           : Array.isArray(categoriesRes.data)
