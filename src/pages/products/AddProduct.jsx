@@ -44,7 +44,7 @@ function AddProductEnhanced() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/categories")
+        const res = await fetch("https://jgenterprisebackend.onrender.com/api/categories")
         const data = await res.json()
         setCategories(Array.isArray(data) ? data : data.categories || [])
       } catch (err) {
