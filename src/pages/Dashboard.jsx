@@ -25,7 +25,7 @@ function Dashboard() {
         const products = productsRes.data.success ? productsRes.data.products : []
 
         // Fetch categories
-        const categoriesRes = await axios.get("hhttps://jgenterprisebackend.onrender.com/api/categories")
+        const categoriesRes = await axios.get("https://jgenterprisebackend.onrender.com/api/categories")
         const categories = categoriesRes.data.success
           ? categoriesRes.data.categories
           : Array.isArray(categoriesRes.data)
