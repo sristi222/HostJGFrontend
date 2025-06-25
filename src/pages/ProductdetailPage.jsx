@@ -41,7 +41,7 @@ function ProductDetailPage() {
 
     const fetchSimilarProducts = async () => {
       try {
-        const res = await fetch(`https://jgenterprisebackend.onrender.com/api/products/similar/${productId}`)
+        const res = await fetch(`https://jgenterprisebackend.onrender.com/api/products/similar/${productId}`)//
         const data = await res.json()
         if (res.ok) {
           setSimilarProducts(data)
