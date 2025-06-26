@@ -129,7 +129,7 @@ function ContactPage() {
   loading="lazy"
   allowFullScreen
   referrerPolicy="no-referrer-when-downgrade"
-  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d220.77080630621128!2d85.30974615053009!3d27.70700602399828!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb18ff3d70e0f9%3A0xf50afde1ef29691a!2sBhedasingh%2C%20Kathmandu%2044600!5e0!3m2!1sen!2snp!4v1750942722419!5m2!1sen!2snp"</iframe></div>
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d220.77080630621128!2d85.30974615053009!3d27.70700602399828!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb18ff3d70e0f9%3A0xf50afde1ef29691a!2sBhedasingh%2C%20Kathmandu%2044600!5e0!3m2!1sen!2snp!4v1750942722419!5m2!1sen!2snp"></iframe></div>
 
           </div>
         </div>
