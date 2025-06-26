@@ -8,7 +8,7 @@ function ContactPage() {
       <div className="contact-container">
         <div className="contact-header">
           <h1>Contact Us</h1>
-          <p>We'd love to hear from you! Find our location on the map or use our contact information below.</p>
+          <p>We'd love to hear from you! Find our location on the map or use our contact information below..</p>
         </div>
 
         <div className="contact-layout">
