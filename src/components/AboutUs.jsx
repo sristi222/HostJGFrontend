@@ -18,22 +18,63 @@ function AboutUs() {
         <section className="about-section">
           <div className="about-section-content">
             <h2>हाम्रो कथा</h2>
-            <p>
-              Our local store has been here for over 180 years. Four generations of my family have worked hard to give you good, clean, and honest products. It all started from our home, when my father, Jaki Gopal, began delivering packed goods to people—a rare thing at that time.
-            </p>
-            <p>
-              We’ve always believed in serving our customers with love, honesty, and care. In 2048 B.S., I joined my father in the shop. For the last 25 years, I have looked after the store with my full heart, even when my brothers moved abroad.
-            </p>
-            <p>
-              Today, we are still known for our quality. We bring you rice from Nala Panauti, mustard oil made from pure Nepali seeds, and ghee made the traditional way—just like our grandparents used to. Many of these are still made by our family, with our own hands.
-            </p>
-            <p>This store is more than a business. It’s my family’s promise to you—for trust, purity, and true Nepali taste. Thank you for being part of our journey.</p>
+            <div className="story-content">
+              <p>
+                Our local store has stood proudly for over 180 years. For four generations, my family has worked with
+                love and dedication to bring you clean, honest, and high-quality products.
+              </p>
+              <p>
+                It all began at home, when my forefathers first started the business. Later, my father, Gopal Lal
+                Shrestha—fondly known as Jaki Gopal—turned it into a proper establishment. He began delivering locally
+                produced goods to the people, especially local rice of Nala Panauti and Tychin beaten rice (special
+                chura), something that was rare and deeply valued at the time.
+              </p>
+              <p>
+                We've always believed in doing business with love, honesty, and care. In 2048 B.S., I joined my father
+                in the shop. When he passed away in 2056 B.S., my brother Binesh Lal Shrestha and I continued the
+                journey together. A few years later, my brother moved abroad. Since then, I have looked after the store
+                with my whole heart, carrying forward the values passed down through generations.
+              </p>
+              <div className="products-highlight">
+                <p>
+                  <strong>Even today, our name is known for quality. We proudly offer:</strong>
+                </p>
+                <ul>
+                  <li>Rice from the fields of Nala Panauti</li>
+                  <li>Tychin beaten rice made with locally sourced paddy (dhaan) using traditional boiling methods</li>
+                  <li>Mustard oil pressed from pure Nepali seeds</li>
+                  <li>
+                    Ghee made the traditional way, and many other products just like our grandparents used to prepare
+                  </li>
+                </ul>
+              </div>
+              <p>
+                Many of these goods are still made using age-old methods—respected and trusted by our local community
+                for generations.
+              </p>
+              <div className="story-conclusion">
+                <p>
+                  <strong>
+                    This store is more than just a business. It is my family's promise to you—a promise of trust,
+                    purity, and the true taste of Nepal.
+                  </strong>
+                </p>
+                <p>
+                  <em>Thank you for being part of our journey.</em>
+                </p>
+              </div>
+            </div>
           </div>
           <div className="about-section-image">
-            <img
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-06-12%20at%2017.54.19_7fbe2e50.jpg-yrAA83mHsJJdC4NLdp3w3Vfv7OrD6q.jpeg"
-              alt="Dinesh Laal in his shop"
-            />
+            <div className="image-container">
+              <img
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-06-12%20at%2017.54.19_7fbe2e50.jpg-yrAA83mHsJJdC4NLdp3w3Vfv7OrD6q.jpeg"
+                alt="Dinesh Laal in his shop"
+              />
+              <div className="image-caption">
+                <p>Dinesh Laal at his grocery store</p>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -41,16 +82,22 @@ function AboutUs() {
           <div className="about-section-content">
             <h2>हाम्रो उद्देश्य</h2>
             <p>
-              At our local store, my mission is more than just selling groceries. It's about keeping a family tradition alive. I want to offer you food that is fresh, local, and full of Nepal’s rich farming and cultural heritage.
+              At our local store, my mission is more than just selling groceries. It's about keeping a family tradition
+              alive. I want to offer you food that is fresh, local, and full of Nepal's rich farming and cultural
+              heritage.
             </p>
             <p>
-              My goal is to bring every home honest, pure, and healthy food. From hand-milled grains and pure ghee to traditional mustard oil and heirloom rice, I focus on giving you food that you can trust and proudly serve at your table.
+              My goal is to bring every home honest, pure, and healthy food. From hand-milled grains and pure ghee to
+              traditional mustard oil and heirloom rice, I focus on giving you food that you can trust and proudly serve
+              at your table.
             </p>
             <p>
-              I work closely with millers and local farmers to make sure everything is made with care, in a way that’s clean and respectful to nature. By supporting local producers, we not only keep the quality high but also help our community grow strong for the future.
+              I work closely with millers and local farmers to make sure everything is made with care, in a way that's
+              clean and respectful to nature. By supporting local producers, we not only keep the quality high but also
+              help our community grow strong for the future.
             </p>
           </div>
-          <div className="about-section-image">
+          <div className="about-section-img">
             <img
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-06-12%20at%2017.54.24_38908018.jpg-XQwMnOB8yZk0z3B7F0odiUfnzAz7W7.jpeg"
               alt="Store shelves with traditional products"
@@ -80,7 +127,8 @@ function AboutUs() {
               </div>
               <h3>शुद्धता</h3>
               <p>
-                We sell food that is clean and made properly. What we give to you is what we use at home. We check everything ourselves before it reaches your hands.
+                We sell food that is clean and made properly. What we give to you is what we use at home. We check
+                everything ourselves before it reaches your hands.
               </p>
             </div>
             <div className="about-value-card">
@@ -104,9 +152,8 @@ function AboutUs() {
               </div>
               <h3>सम्बन्ध</h3>
               <p>
-                We work with local farmers and families. Our store has grown with the people around us.
-
-These ties are what keep our work honest and strong.
+                We work with local farmers and families. Our store has grown with the people around us. These ties are
+                what keep our work honest and strong.
               </p>
             </div>
             <div className="about-value-card">
@@ -127,9 +174,8 @@ These ties are what keep our work honest and strong.
               </div>
               <h3>विश्वास</h3>
               <p>
-               People trust us because we do things the right way. We keep our word and keep things simple.
-
-That trust is what we care about the most.
+                People trust us because we do things the right way. We keep our word and keep things simple. That trust
+                is what we care about the most.
               </p>
             </div>
             <div className="about-value-card">
@@ -153,9 +199,8 @@ That trust is what we care about the most.
               </div>
               <h3>सेवा</h3>
               <p>
-               We are here to help. Whether it’s a small need or home delivery, we try our best every day.
-
-Serving you well is our main mission.
+                We are here to help. Whether it's a small need or home delivery, we try our best every day. Serving you
+                well is our main mission.
               </p>
             </div>
           </div>
