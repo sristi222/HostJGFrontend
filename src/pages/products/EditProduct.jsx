@@ -228,7 +228,7 @@ function EditProduct() {
     }
 
     try {
-      const res = await fetch(`http://localhost:5000/api/products/${id}`, {
+      const res = await fetch(`https://jgenterprisebackend.onrender.com/api/products/${id}`, {
         method: "PUT",
         body: formDataToSend,
       })
