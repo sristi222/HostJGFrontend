@@ -3,9 +3,15 @@
 import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useCart } from "../context/CartContext"
-import { MenuIcon, XIcon, SearchIcon, PhoneIcon, ShoppingCartIcon } from "lucide-react"
+import {
+  Menu as MenuIcon,
+  X as XIcon,
+  Search as SearchIcon,
+  Phone as PhoneIcon,
+  ShoppingCart as ShoppingCartIcon,
+} from "lucide-react"
 import "./Navbar.css"
-//imp
+
 function Navbar() {
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState("")
@@ -17,9 +23,8 @@ function Navbar() {
     const fetchCategories = async () => {
       try {
         const response = await fetch("https://jgenterprisebackend.onrender.com/api/categories")
-        if (!response.ok) {
-          throw new Error("Failed to fetch categories")
-        }
+        if (!response.ok) throw new Error("Failed to fetch categories")
+
         const data = await response.json()
         const formatted = data.map((cat) => ({ id: cat._id, name: cat.name }))
         setAvailableCategories(formatted)
@@ -36,13 +41,14 @@ function Navbar() {
         setAvailableCategories(formatted)
       }
     }
+
     fetchCategories()
   }, [])
 
   const handleSearch = (e) => {
     e.preventDefault()
     if (searchQuery.trim()) {
-      navigate(/products?search=${encodeURIComponent(searchQuery.trim())})
+      navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`)
       setIsMobileMenuOpen(false)
     }
   }
@@ -71,7 +77,6 @@ function Navbar() {
             <div className="grocery-logo-text">JG Store</div>
           </Link>
 
-          {/* Search container is back inside main-navbar for desktop and mobile wrapping */}
           <div className="grocery-search-container">
             <form onSubmit={handleSearch} className="grocery-search-bar">
               <SearchIcon className="grocery-search-icon" size={18} />
@@ -115,7 +120,6 @@ function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div className="grocery-mobile-menu mobile-only">
           <div className="grocery-mobile-menu-header">
@@ -131,6 +135,7 @@ function Navbar() {
               <XIcon size={24} />
             </button>
           </div>
+
           <div className="grocery-mobile-search-container">
             <form onSubmit={handleSearch} className="grocery-search-bar">
               <SearchIcon className="grocery-search-icon" size={18} />
@@ -143,6 +148,7 @@ function Navbar() {
               />
             </form>
           </div>
+
           <nav className="grocery-mobile-nav-links">
             <Link to="/about" className="grocery-mobile-nav-link" onClick={handleNavLinkClick}>
               About Us
@@ -172,7 +178,7 @@ function Navbar() {
             {availableCategories.map((category) => (
               <Link
                 key={category.id}
-                to={/products?category=${category.id}}
+                to={`/products?category=${category.id}`}
                 className="grocery-category-item"
                 onClick={handleNavLinkClick}
               >
