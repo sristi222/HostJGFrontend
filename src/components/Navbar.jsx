@@ -42,7 +42,7 @@ function Navbar() {
   const handleSearch = (e) => {
     e.preventDefault()
     if (searchQuery.trim()) {
-      navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`)
+      navigate(/products?search=${encodeURIComponent(searchQuery.trim())})
       setIsMobileMenuOpen(false)
     }
   }
@@ -61,14 +61,17 @@ function Navbar() {
       <div className="grocery-main-navbar">
         <div className="grocery-container">
           <Link to="/" className="grocery-logo" onClick={handleNavLinkClick}>
-            <img
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-mpNFhkKreRSUgEDGjILON9SSTQ8q9C.png"
-              alt="JG Store Logo"
-              className="grocery-logo-image"
-            />
+            <div className="logo-badge">
+              <img
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-mpNFhkKreRSUgEDGjILON9SSTQ8q9C.png"
+                alt="JG Store Logo"
+                className="grocery-logo-image"
+              />
+            </div>
             <div className="grocery-logo-text">JG Store</div>
           </Link>
 
+          {/* Search container is back inside main-navbar for desktop and mobile wrapping */}
           <div className="grocery-search-container">
             <form onSubmit={handleSearch} className="grocery-search-bar">
               <SearchIcon className="grocery-search-icon" size={18} />
@@ -169,7 +172,7 @@ function Navbar() {
             {availableCategories.map((category) => (
               <Link
                 key={category.id}
-                to={`/products?category=${category.id}`}
+                to={/products?category=${category.id}}
                 className="grocery-category-item"
                 onClick={handleNavLinkClick}
               >
