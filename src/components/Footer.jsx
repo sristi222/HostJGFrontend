@@ -25,7 +25,14 @@ function Footer() {
       <div className="footer-top">
         <div className="footer-container">
           <div className="footer-column about-column">
-            <h3 className="footer-heading">Dinesh Laal's Shop</h3>
+            <div className="footer-logo">
+              <img
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-mpNFhkKreRSUgEDGjILON9SSTQ8q9C.png"
+                alt="JG Store Logo"
+                className="footer-logo-image"
+              />
+              <h3 className="footer-heading">JG Store</h3>
+            </div>
             <p className="footer-about-text">
               We provide premium quality groceries at competitive prices. Our mission is to deliver fresh products right
               to your doorstep with exceptional service.
@@ -97,7 +104,6 @@ function Footer() {
                 </div>
                 <div className="contact-text">
                   <p>+977 9841241832</p>
-                  
                 </div>
               </div>
 
@@ -152,7 +158,7 @@ function Footer() {
       <div className="footer-bottom">
         <div className="footer-container">
           <p className="copyright" onClick={handleCopyrightClick}>
-            &copy; {currentYear} Dinesh Laal's Shop. All Rights Reserved.
+            &copy; {currentYear} JG Store. All Rights Reserved.
           </p>
           <p className="developer-credit">Designed and developed by Zenkai Studio</p>
         </div>
