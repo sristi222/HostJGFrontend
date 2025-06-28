@@ -30,30 +30,86 @@
   align-items: center;
   text-decoration: none;
   flex-shrink: 0;
-  gap: 12px; /* Space between logo and text */
+  /* Removed gap here, gap is now handled by margin-right on .logo-badge */
+  transition: transform 0.2s ease;
 }
 
+.grocery-main-navbar .grocery-logo:hover {
+  transform: scale(1.02); /* Subtle scale on hover for the whole logo area */
+}
+
+/* Final Polish: White badge behind only the logo image */
+.logo-badge {
+  background: white;
+  padding: 6px; /* Consistent padding */
+  border-radius: 8px; /* Slightly less rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); /* Softer shadow */
+  margin-right: 12px; /* Space between badge and text */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 52px; /* Reduced height */
+  width: 52px; /* Reduced width for a more compact square badge */
+  flex-shrink: 0; /* Prevent shrinking */
+  transition: transform 0.2s ease; /* Add transition for hover effect */
+}
+
+.logo-badge:hover {
+  transform: scale(1.03); /* Hover effect for the badge itself */
+}
+
+.logo-badge img {
+  max-height: 40px; /* Reduced max-height */
+  max-width: 40px; /* Reduced max-width */
+  object-fit: contain;
+  filter: none; /* Ensure no brightness filter on the image within the white badge */
+}
+
+/* Text part of the logo */
+.grocery-main-navbar .grocery-logo-text {
+  color: white; /* White color for text on red background */
+  font-size: 22px;
+  font-weight: bold;
+  white-space: nowrap;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Original .grocery-logo styles (for mobile menu, if not overridden) */
+/* These styles apply to the logo in the mobile menu, which does not have the white badge */
+/* .grocery-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+  gap: 12px;
+} / / This block is commented out as it conflicts with the main logo styles */
+
 .grocery-logo-image {
-  height: 55px; /* Increased from 45px */
+  height: 55px; /* Original height for other contexts (e.g., mobile menu) */
   width: auto;
-  max-width: 180px; /* Increased from 160px */
+  max-width: 180px;
   object-fit: contain;
   transition: transform 0.2s ease;
-  filter: brightness(1.1); /* Slightly brighten the logo for better visibility on red background */
+  filter: brightness(1.1); /* Original filter for other contexts */
 }
 
 .grocery-logo-image:hover {
   transform: scale(1.05);
 }
 
-/* Remove the old text-based logo styles */
-/* .grocery-logo-text styles are no longer needed */
-.grocery-logo-text {
+/* .grocery-logo-text {
   color: white;
   font-size: 22px;
   font-weight: bold;
   white-space: nowrap;
   font-family: "Poppins", sans-serif;
+} / / This block is commented out as it conflicts with the main logo text styles */
+
+/* Change logo text color back to red for the mobile menu header */
+.grocery-mobile-menu-header .grocery-logo-text {
+  color: #c22126; /* Original red color for mobile menu */
+  font-size: 20px; /* Keep mobile specific font size */
+  font-weight: bold;
 }
 
 /* Search Bar */
@@ -451,6 +507,17 @@
     display: block;
   }
 
+  .logo-badge {
+    height: 52px; /* Adjusted height for mobile */
+    width: 52px; /* Adjusted width for mobile */
+  }
+
+  .logo-badge img {
+    height: 40px; /* Adjusted image height for mobile */
+    max-height: 40px;
+    max-width: 40px;
+  }
+
   .grocery-mobile-menu,
   .grocery-mobile-menu-header,
   .grocery-mobile-search-container,
@@ -545,5 +612,16 @@
   .grocery-category-item {
     margin-right: 15px;
     font-size: 12px;
+  }
+
+  .logo-badge {
+    height: 44px;
+    width: 44px;
+  }
+
+  .logo-badge img {
+    height: 36px;
+    max-height: 36px;
+    max-width: 36px;
   }
 }
