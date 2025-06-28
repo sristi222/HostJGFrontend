@@ -424,17 +424,6 @@ function Categories() {
                     rows={3}
                   />
                 </div>
-                <div className="form-group">
-                  <label htmlFor="editCategoryStatus">Status</label>
-                  <select
-                    id="editCategoryStatus"
-                    value={editCategory.status}
-                    onChange={(e) => setEditCategory({ ...editCategory, status: e.target.value })}
-                  >
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
-                  </select>
-                </div>
               </div>
               <div className="modal-footer">
                 <button type="button" className="cancel-btn" onClick={() => setShowEditForm(false)}>
