@@ -43,7 +43,7 @@ function Categories() {
   const handleAddCategory = async (e) => {
     e.preventDefault()
     try {
-      const res = await fetch("/api/categories", {
+      const res = await fetch("https://jgenterprisebackend.onrender.com/api/categories", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newCategory),
@@ -60,7 +60,7 @@ function Categories() {
   const handleEditCategory = async (e) => {
     e.preventDefault()
     try {
-      const res = await fetch(`/api/categories/${editCategory.id}`, {
+      const res = await fetch(`https://jgenterprisebackend.onrender.com/api/categories/${editCategory.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(editCategory),
@@ -78,7 +78,7 @@ function Categories() {
   const handleAddSubcategory = async (e) => {
     e.preventDefault()
     try {
-      const res = await fetch(`/api/categories/${newSubcategory.categoryId}/subcategories`, {
+      const res = await fetch(`https://jgenterprisebackend.onrender.com/api/categories/${newSubcategory.categoryId}/subcategories`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: newSubcategory.name }),
@@ -97,7 +97,7 @@ function Categories() {
   const handleDeleteCategory = async (id) => {
     if (!window.confirm("Are you sure you want to delete this category?")) return
     try {
-      await fetch(`/api/categories/${id}`, { method: "DELETE" })
+      await fetch(`https://jgenterprisebackend.onrender.com/api/categories/${id}`, { method: "DELETE" })
       setCategories(categories.filter((c) => c._id !== id))
     } catch (err) {
       console.error("Error deleting category:", err)
@@ -107,7 +107,7 @@ function Categories() {
   const handleDeleteSubcategory = async (categoryId, subcategoryId, subcategoryName) => {
     if (!window.confirm(`Delete subcategory "${subcategoryName}"?`)) return
     try {
-      await fetch(`/api/categories/${categoryId}/subcategories/${subcategoryId}`, { method: "DELETE" })
+      await fetch(`https://jgenterprisebackend.onrender.com/api/categories/${categoryId}/subcategories/${subcategoryId}`, { method: "DELETE" })
       fetchCategories()
     } catch (err) {
       console.error("Error deleting subcategory:", err)
