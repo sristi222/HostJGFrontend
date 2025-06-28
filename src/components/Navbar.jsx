@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { useCart } from "../context/CartContext"
 import { MenuIcon, XIcon, SearchIcon, PhoneIcon, ShoppingCartIcon } from "lucide-react"
 import "./Navbar.css"
-
+//imp
 function Navbar() {
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState("")
