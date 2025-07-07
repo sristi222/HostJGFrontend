@@ -1,17 +1,18 @@
-/* Navbar Styless */
+/* Navbar Styles */
 .grocery-navbar {
   font-family: "Poppins", sans-serif;
   position: sticky;
   top: 0;
   z-index: 1000;
   width: 100%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Main navbar */
+/* Main navbar - Updated to green background */
 .grocery-main-navbar {
-  background-color: #c22126;
-  padding: 10px 20px;
+  background: linear-gradient(135deg, #2d5016 0%, #1a3009 100%);
+  padding: 12px 20px;
+  border-bottom: 3px solid #ff8c42;
 }
 
 .grocery-container {
@@ -30,109 +31,103 @@
   align-items: center;
   text-decoration: none;
   flex-shrink: 0;
-  /* Removed gap here, gap is now handled by margin-right on .logo-badge */
   transition: transform 0.2s ease;
 }
 
 .grocery-main-navbar .grocery-logo:hover {
-  transform: scale(1.02); /* Subtle scale on hover for the whole logo area */
+  transform: scale(1.02);
 }
 
-/* Final Polish: White badge behind only the logo image */
+/* Updated logo badge border to orange */
 .logo-badge {
-  background: white;
-  padding: 6px; /* Consistent padding */
-  border-radius: 8px; /* Slightly less rounded corners */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); /* Softer shadow */
-  margin-right: 12px; /* Space between badge and text */
+  background: rgba(255, 255, 255, 0.95);
+  padding: 8px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin-right: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 52px; /* Reduced height */
-  width: 52px; /* Reduced width for a more compact square badge */
-  flex-shrink: 0; /* Prevent shrinking */
-  transition: transform 0.2s ease; /* Add transition for hover effect */
+  height: 56px;
+  width: 56px;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+  border: 2px solid rgba(255, 140, 66, 0.3);
 }
 
 .logo-badge:hover {
-  transform: scale(1.03); /* Hover effect for the badge itself */
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  border-color: #ff8c42;
 }
 
 .logo-badge img {
-  max-height: 40px; /* Reduced max-height */
-  max-width: 40px; /* Reduced max-width */
+  max-height: 42px;
+  max-width: 42px;
   object-fit: contain;
-  filter: none; /* Ensure no brightness filter on the image within the white badge */
+  filter: none;
 }
 
-/* Text part of the logo */
+/* Text part of the logo stays white */
 .grocery-main-navbar .grocery-logo-text {
-  color: white; /* White color for text on red background */
-  font-size: 22px;
-  font-weight: bold;
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 700;
   white-space: nowrap;
   font-family: "Poppins", sans-serif;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.5px;
 }
 
-/* Original .grocery-logo styles (for mobile menu, if not overridden) */
-/* These styles apply to the logo in the mobile menu, which does not have the white badge */
-/* .grocery-logo {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  flex-shrink: 0;
-  gap: 12px;
-} / / This block is commented out as it conflicts with the main logo styles */
-
+/* Original .grocery-logo styles for mobile menu */
 .grocery-logo-image {
-  height: 55px; /* Original height for other contexts (e.g., mobile menu) */
+  height: 55px;
   width: auto;
   max-width: 180px;
   object-fit: contain;
   transition: transform 0.2s ease;
-  filter: brightness(1.1); /* Original filter for other contexts */
+  filter: brightness(1.1);
 }
 
 .grocery-logo-image:hover {
   transform: scale(1.05);
 }
 
-/* .grocery-logo-text {
-  color: white;
-  font-size: 22px;
-  font-weight: bold;
-  white-space: nowrap;
-  font-family: "Poppins", sans-serif;
-} / / This block is commented out as it conflicts with the main logo text styles */
-
-/* Change logo text color back to red for the mobile menu header */
+/* Change logo text color for the mobile menu header to green */
 .grocery-mobile-menu-header .grocery-logo-text {
-  color: #c22126; /* Original red color for mobile menu */
-  font-size: 20px; /* Keep mobile specific font size */
+  color: #2d5016;
+  font-size: 20px;
   font-weight: bold;
 }
 
-/* Search Bar */
+/* Search Bar - Updated styling with orange accents */
 .grocery-search-container {
   flex: 1;
-  max-width: 400px;
-  margin: 0 20px;
+  max-width: 420px;
+  margin: 0 24px;
 }
 
 .grocery-search-bar {
   position: relative;
   display: flex;
   align-items: center;
-  height: 40px;
-  border-radius: 6px;
+  height: 44px;
+  border-radius: 22px;
   background-color: white;
-  border: 1px solid #e5e7eb;
+  border: 2px solid rgba(255, 140, 66, 0.3);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.grocery-search-bar:focus-within {
+  border-color: #ff8c42;
+  box-shadow: 0 0 0 3px rgba(255, 140, 66, 0.2);
 }
 
 .grocery-search-icon {
   position: absolute;
-  left: 12px;
-  color: #9ca3af;
+  left: 16px;
+  color: #2d5016;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -143,64 +138,78 @@
 .grocery-search-input {
   width: 100%;
   height: 100%;
-  padding: 0 12px 0 40px;
-  border-radius: 6px;
+  padding: 0 16px 0 48px;
+  border-radius: 22px;
   border: none;
   outline: none;
   font-size: 15px;
   background-color: transparent;
+  color: #2d5016;
+  font-weight: 500;
 }
 
 .grocery-search-input::placeholder {
-  color: #9ca3af;
+  color: #6b7280;
   opacity: 0.8;
 }
 
-/* Nav Actions */
+/* Nav Actions - Updated colors */
 .grocery-nav-actions {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 20px;
   flex-shrink: 0;
 }
 
 .grocery-nav-link {
   color: white;
   text-decoration: none;
-  font-weight: 500;
-  padding: 6px 12px;
-  transition: background-color 0.2s, color 0.2s;
-  border-radius: 4px;
+  font-weight: 600;
+  padding: 8px 16px;
+  transition: all 0.3s ease;
+  border-radius: 8px;
   font-size: 15px;
   white-space: nowrap;
+  position: relative;
 }
 
 .grocery-nav-link:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 140, 66, 0.2);
+  color: #ff8c42;
+  transform: translateY(-1px);
 }
 
 .grocery-order-section {
   display: flex;
   align-items: center;
   color: white;
-  padding: 6px 10px;
-  border-radius: 4px;
-  background-color: rgba(255, 255, 255, 0.1);
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(255, 140, 66, 0.2), rgba(255, 140, 66, 0.1));
+  border: 1px solid rgba(255, 140, 66, 0.3);
+  transition: all 0.3s ease;
+}
+
+.grocery-order-section:hover {
+  background: linear-gradient(135deg, rgba(255, 140, 66, 0.3), rgba(255, 140, 66, 0.2));
+  transform: translateY(-1px);
 }
 
 .grocery-phone-icon {
-  margin-right: 8px;
+  margin-right: 10px;
+  color: #ff8c42;
 }
 
 .grocery-order-label {
   font-size: 11px;
   line-height: 1.2;
-  font-weight: 500;
-  opacity: 0.8;
+  font-weight: 600;
+  opacity: 0.9;
+  letter-spacing: 0.5px;
 }
 
 .grocery-order-number {
-  font-weight: bold;
+  font-weight: 700;
   line-height: 1.2;
   font-size: 15px;
   color: white;
@@ -208,6 +217,7 @@
 }
 
 .grocery-order-number:hover {
+  color: #ff8c42;
   text-decoration: underline;
 }
 
@@ -217,38 +227,42 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 5px;
-  border-radius: 4px;
-  transition: background-color 0.2s;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
   text-decoration: none;
 }
 
 .grocery-cart-icon:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 140, 66, 0.2);
+  color: #ff8c42;
+  transform: translateY(-1px);
 }
 
 .grocery-cart-count {
   position: absolute;
-  top: -8px;
-  right: -8px;
-  background-color: white;
-  color: #c22126;
-  min-width: 20px;
-  height: 20px;
+  top: -6px;
+  right: -6px;
+  background: linear-gradient(135deg, #ff8c42, #ff7a2b);
+  color: white;
+  min-width: 22px;
+  height: 22px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 12px;
-  font-weight: bold;
+  font-weight: 700;
   padding: 2px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  border: 2px solid white;
 }
 
-/* Categories Navigation */
+/* Categories Navigation - Updated styling */
 .grocery-categories-nav {
-  background-color: white;
-  border-bottom: 1px solid #e5e7eb;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-bottom: 2px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   position: relative;
 }
 
@@ -258,28 +272,28 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 20px;
+  width: 30px;
   pointer-events: none;
   z-index: 1;
 }
 
 .grocery-categories-nav::before {
   left: 0;
-  background: linear-gradient(to right, white, transparent);
+  background: linear-gradient(to right, #f8f9fa, transparent);
 }
 
 .grocery-categories-nav::after {
   right: 0;
-  background: linear-gradient(to left, white, transparent);
+  background: linear-gradient(to left, #f8f9fa, transparent);
 }
 
 .grocery-categories-list {
   display: flex;
   overflow-x: auto;
   white-space: nowrap;
-  padding: 12px 20px;
+  padding: 16px 24px;
   scrollbar-width: thin;
-  scrollbar-color: #c22126 #f1f1f1;
+  scrollbar-color: #ff8c42 #f1f1f1;
   scroll-behavior: smooth;
   flex: 1;
   position: relative;
@@ -295,23 +309,25 @@
 }
 
 .grocery-categories-list::-webkit-scrollbar-thumb {
-  background: #c22126;
+  background: linear-gradient(90deg, #ff8c42, #2d5016);
   border-radius: 2px;
 }
 
 .grocery-categories-list::-webkit-scrollbar-thumb:hover {
-  background: #a51d21;
+  background: linear-gradient(90deg, #ff7a2b, #1a3009);
 }
 
 .grocery-category-item {
-  color: #4b5563;
-  font-weight: bold;
+  color: #2d5016;
+  font-weight: 600;
   text-decoration: none;
-  margin-right: 30px;
-  transition: color 0.2s;
+  margin-right: 32px;
+  transition: all 0.3s ease;
   font-size: 14px;
   white-space: nowrap;
-  padding: 4px 0;
+  padding: 6px 12px;
+  border-radius: 6px;
+  position: relative;
 }
 
 .grocery-category-item:last-child {
@@ -319,7 +335,25 @@
 }
 
 .grocery-category-item:hover {
-  color: #c22126;
+  color: #ff8c42;
+  background-color: rgba(255, 140, 66, 0.1);
+  transform: translateY(-1px);
+}
+
+.grocery-category-item::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #ff8c42, #2d5016);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.grocery-category-item:hover::after {
+  width: 100%;
 }
 
 /* Mobile Menu Toggle */
@@ -329,21 +363,28 @@
   color: white;
   cursor: pointer;
   display: none;
-  padding: 5px;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
 }
 
-/* Mobile Menu Overlay */
+.grocery-menu-toggle:hover {
+  background-color: rgba(255, 140, 66, 0.2);
+  color: #ff8c42;
+}
+
+/* Mobile Menu Overlay - Updated styling */
 .grocery-mobile-menu {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: white;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
   z-index: 1002;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 24px;
   box-sizing: border-box;
   overflow-y: auto;
   animation: slideIn 0.3s forwards;
@@ -362,85 +403,93 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid #eee;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e5e7eb;
 }
 
 .grocery-mobile-menu-header .grocery-logo {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .grocery-mobile-menu-header .grocery-logo-image {
-  height: 35px;
+  height: 40px;
   width: auto;
-  max-width: 120px;
+  max-width: 140px;
   object-fit: contain;
 }
 
 .grocery-mobile-menu-header .grocery-logo-text {
-  color: #c22126;
-  font-size: 20px;
-  font-weight: bold;
+  color: #2d5016;
+  font-size: 22px;
+  font-weight: 700;
 }
 
 .grocery-mobile-menu-header button {
   background: none;
   border: none;
-  color: #333;
+  color: #2d5016;
   cursor: pointer;
-  padding: 5px;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.grocery-mobile-menu-header button:hover {
+  background-color: rgba(255, 140, 66, 0.1);
+  color: #ff8c42;
 }
 
 .grocery-mobile-search-container {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .grocery-mobile-nav-links {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 4px;
 }
 
 .grocery-mobile-nav-link,
 .grocery-mobile-nav-links .grocery-category-item {
-  color: #333;
+  color: #2d5016;
   text-decoration: none;
   font-size: 16px;
-  font-weight: 500;
-  padding: 10px 0;
-  border-bottom: 1px solid #eee;
-  transition: background-color 0.2s;
+  font-weight: 600;
+  padding: 14px 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
 }
 
 .grocery-mobile-nav-link:hover,
 .grocery-mobile-nav-links .grocery-category-item:hover {
-  background-color: #f9f9f9;
-}
-
-.grocery-mobile-nav-links .grocery-category-item:last-of-type {
-  border-bottom: none;
+  background: linear-gradient(135deg, rgba(255, 140, 66, 0.1), rgba(45, 80, 22, 0.05));
+  color: #ff8c42;
+  border-color: rgba(255, 140, 66, 0.2);
+  transform: translateX(4px);
 }
 
 .grocery-order-section.mobile-only-phone {
   display: flex;
   align-items: center;
-  color: #333;
-  padding: 15px 0;
-  margin-top: 15px;
-  border-top: 1px solid #eee;
-  background-color: transparent;
+  color: #2d5016;
+  padding: 16px;
+  margin-top: 20px;
+  border-top: 2px solid #e5e7eb;
+  background: linear-gradient(135deg, rgba(255, 140, 66, 0.1), rgba(45, 80, 22, 0.05));
+  border-radius: 8px;
 }
 
 .grocery-order-section.mobile-only-phone .grocery-phone-icon {
-  color: #c22126;
+  color: #ff8c42;
 }
 
 .grocery-order-section.mobile-only-phone .grocery-order-label,
 .grocery-order-section.mobile-only-phone .grocery-order-number {
-  color: #333;
+  color: #2d5016;
 }
 
 /* Responsive Breakpoints */
@@ -452,13 +501,13 @@
 
 @media (max-width: 768px) {
   .grocery-logo-text {
-    font-size: 18px;
+    font-size: 20px;
   }
 
   .grocery-main-navbar .grocery-container {
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 15px;
+    gap: 16px;
   }
 
   .grocery-logo {
@@ -466,8 +515,8 @@
   }
 
   .grocery-logo-image {
-    height: 48px; /* Increased from 38px */
-    max-width: 150px; /* Increased from 130px */
+    height: 50px;
+    max-width: 160px;
   }
 
   .grocery-search-container {
@@ -478,7 +527,7 @@
 
   .grocery-nav-actions {
     order: 2;
-    gap: 15px;
+    gap: 16px;
   }
 
   .grocery-order-section.desktop-only {
@@ -490,16 +539,16 @@
   }
 
   .grocery-categories-list {
-    padding: 8px 15px;
+    padding: 12px 20px;
   }
 
   .grocery-categories-nav::before,
   .grocery-categories-nav::after {
-    width: 15px;
+    width: 20px;
   }
 
   .grocery-category-item {
-    margin-right: 20px;
+    margin-right: 24px;
     font-size: 13px;
   }
 
@@ -508,14 +557,14 @@
   }
 
   .logo-badge {
-    height: 52px; /* Adjusted height for mobile */
-    width: 52px; /* Adjusted width for mobile */
+    height: 54px;
+    width: 54px;
   }
 
   .logo-badge img {
-    height: 40px; /* Adjusted image height for mobile */
-    max-height: 40px;
-    max-width: 40px;
+    height: 42px;
+    max-height: 42px;
+    max-width: 42px;
   }
 
   .grocery-mobile-menu,
@@ -530,6 +579,7 @@
   .grocery-mobile-menu.mobile-only {
     display: flex;
   }
+
   .grocery-mobile-menu.mobile-only .grocery-mobile-menu-header,
   .grocery-mobile-menu.mobile-only .grocery-mobile-search-container,
   .grocery-mobile-menu.mobile-only .grocery-mobile-nav-links,
@@ -537,6 +587,7 @@
   .grocery-mobile-menu.mobile-only .grocery-order-section.mobile-only-phone {
     display: flex;
   }
+
   .grocery-mobile-menu.mobile-only .grocery-mobile-nav-links {
     flex-direction: column;
   }
@@ -544,20 +595,20 @@
 
 @media (max-width: 480px) {
   .grocery-logo-text {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .grocery-main-navbar {
-    padding: 8px 15px;
+    padding: 10px 16px;
   }
 
   .grocery-logo-image {
-    height: 40px; /* Increased from 32px */
-    max-width: 120px; /* Increased from 100px */
+    height: 44px;
+    max-width: 130px;
   }
 
   .grocery-search-bar {
-    height: 36px;
+    height: 40px;
   }
 
   .grocery-search-input {
@@ -565,63 +616,63 @@
   }
 
   .grocery-nav-actions {
-    gap: 10px;
+    gap: 12px;
   }
 
   .grocery-cart-icon svg {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
   }
 
   .grocery-cart-count {
-    min-width: 16px;
-    height: 16px;
-    font-size: 10px;
-    top: -6px;
-    right: -6px;
+    min-width: 18px;
+    height: 18px;
+    font-size: 11px;
+    top: -4px;
+    right: -4px;
   }
 
   .grocery-mobile-menu {
-    padding: 15px;
+    padding: 20px;
   }
 
   .grocery-mobile-menu-header .grocery-logo-image {
-    height: 28px;
-    max-width: 90px;
+    height: 32px;
+    max-width: 100px;
   }
 
   .grocery-mobile-menu-header .grocery-logo-text {
-    font-size: 18px;
+    font-size: 20px;
   }
 
   .grocery-mobile-nav-link,
   .grocery-mobile-nav-links .grocery-category-item {
     font-size: 15px;
-    padding: 8px 0;
+    padding: 12px 14px;
   }
 
   .grocery-categories-list {
-    padding: 6px 10px;
+    padding: 10px 16px;
   }
 
   .grocery-categories-nav::before,
   .grocery-categories-nav::after {
-    width: 10px;
+    width: 16px;
   }
 
   .grocery-category-item {
-    margin-right: 15px;
+    margin-right: 20px;
     font-size: 12px;
   }
 
   .logo-badge {
-    height: 44px;
-    width: 44px;
+    height: 48px;
+    width: 48px;
   }
 
   .logo-badge img {
-    height: 36px;
-    max-height: 36px;
-    max-width: 36px;
+    height: 38px;
+    max-height: 38px;
+    max-width: 38px;
   }
 }
