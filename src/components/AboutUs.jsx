@@ -9,7 +9,7 @@ function AboutUs() {
       <div className="about-hero">
         <div className="about-hero-overlay"></div>
         <div className="about-hero-content">
-          <h1>About Dinesh Laal's Shop</h1>
+          <h1>About JG Store</h1>
           <p>Serving generations with quality and trust for over 180 years</p>
         </div>
       </div>
@@ -17,27 +17,24 @@ function AboutUs() {
       <div className="about-container">
         <section className="about-section">
           <div className="about-section-content">
-            <h2>हाम्रो कथा</h2>
+            <h2>Our Story</h2>
             <div className="story-content">
               <p>
-                Our local store has stood proudly for over 180 years. For four generations, my family has worked with
-                love and dedication to bring you clean, honest, and high-quality products.
+                Our store has been part of this community for over 180 years. It was built on love, dedication, and a promise to offer clean and honest products to every home.
+
               </p>
               <p>
-                It all began at home, when my forefathers first started the business. Later, my father, Gopal Lal
-                Shrestha—fondly known as Jaki Gopal—turned it into a proper establishment. He began delivering locally
-                produced goods to the people, especially local rice of Nala Panauti and Tychin beaten rice (special
-                chura), something that was rare and deeply valued at the time.
+                It all started at home, when the Shrestha family began selling goods sourced from nearby villages. Later, Gopal Lal Shrestha (fondly known as Jaki Gopal)—turned it into a proper shop. He became known in the area for bringing rare local items like Nala Panauti rice and Tychin beaten rice (special chura) to families who needed them.
+
               </p>
               <p>
-                We've always believed in doing business with love, honesty, and care. In 2048 B.S., I joined my father
-                in the shop. When he passed away in 2056 B.S., my brother Binesh Lal Shrestha and I continued the
-                journey together. A few years later, my brother moved abroad. Since then, I have looked after the store
-                with my whole heart, carrying forward the values passed down through generations.
+                In 2048 B.S., his sons joined the business, helping it grow while staying true to the same values. After Gopal Lal passed away in 2056 B.S., they took full responsibility and continued what he started, without losing the heart behind it.
+                
+
               </p>
               <div className="products-highlight">
                 <p>
-                  <strong>Even today, our name is known for quality. We proudly offer:</strong>
+                  <strong>Even today, our store is a name people trust. We still do things the same honest way, offering pure and local products with care—just as we always have.</strong>
                 </p>
                 <ul>
                   <li>Rice from the fields of Nala Panauti</li>
@@ -80,21 +77,18 @@ function AboutUs() {
 
         <section className="about-section reverse">
           <div className="about-section-content">
-            <h2>हाम्रो उद्देश्य</h2>
+            <h2>Our Mission</h2>
             <p>
-              At our local store, my mission is more than just selling groceries. It's about keeping a family tradition
-              alive. I want to offer you food that is fresh, local, and full of Nepal's rich farming and cultural
-              heritage.
+              For us, this store is more than just a business. It’s a part of our family and our community. Since the beginning, our goal has been simple—your satisfaction.
+
             </p>
             <p>
-              My goal is to bring every home honest, pure, and healthy food. From hand-milled grains and pure ghee to
-              traditional mustard oil and heirloom rice, I focus on giving you food that you can trust and proudly serve
-              at your table.
+             We want to offer food that you can trust. From fresh, hand-milled grains to pure ghee and local mustard oil, everything we bring to you is chosen with care—just like we would for our own home.
+
             </p>
             <p>
-              I work closely with millers and local farmers to make sure everything is made with care, in a way that's
-              clean and respectful to nature. By supporting local producers, we not only keep the quality high but also
-              help our community grow strong for the future.
+             
+We work closely with local farmers and millers to keep things natural, clean, and full of goodness. It’s how we’ve done things for generations, and we’re proud to keep that tradition alive.
             </p>
           </div>
           <div className="about-section-img">
@@ -106,7 +100,7 @@ function AboutUs() {
         </section>
 
         <section className="about-values">
-          <h2>हाम्रा मूल्यहरू</h2>
+          <h2>Our Values</h2>
           <div className="about-values-grid">
             <div className="about-value-card">
               <div className="about-value-icon">
@@ -125,7 +119,7 @@ function AboutUs() {
                   <polyline points="22 4 12 14.01 9 11.01"></polyline>
                 </svg>
               </div>
-              <h3>शुद्धता</h3>
+              <h3>Quality</h3>
               <p>
                 We sell food that is clean and made properly. What we give to you is what we use at home. We check
                 everything ourselves before it reaches your hands.
@@ -150,7 +144,7 @@ function AboutUs() {
                   <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                 </svg>
               </div>
-              <h3>सम्बन्ध</h3>
+              <h3>Community</h3>
               <p>
                 We work with local farmers and families. Our store has grown with the people around us. These ties are
                 what keep our work honest and strong.
@@ -172,7 +166,7 @@ function AboutUs() {
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                 </svg>
               </div>
-              <h3>विश्वास</h3>
+              <h3>Trust</h3>
               <p>
                 People trust us because we do things the right way. We keep our word and keep things simple. That trust
                 is what we care about the most.
@@ -197,7 +191,7 @@ function AboutUs() {
                   <line x1="15" y1="9" x2="15.01" y2="9"></line>
                 </svg>
               </div>
-              <h3>सेवा</h3>
+              <h3>Service</h3>
               <p>
                 We are here to help. Whether it's a small need or home delivery, we try our best every day. Serving you
                 well is our main mission.
@@ -207,7 +201,7 @@ function AboutUs() {
         </section>
 
         <section className="about-gallery">
-          <h2>हाम्रो पसल</h2>
+          <h2>Our Store</h2>
           <div className="about-gallery-grid">
             <div className="about-gallery-item">
               <img
