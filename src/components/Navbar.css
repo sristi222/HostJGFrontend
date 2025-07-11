@@ -10,7 +10,7 @@
 
 /* Main navbar - Updated to green background */
 .grocery-main-navbar {
-  background: linear-gradient(135deg, #2d5016 0%, #1a3009 100%);
+  background: #498e41;
   padding: 12px 20px;
   border-bottom: 3px solid #ff8c42;
 }
