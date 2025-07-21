@@ -286,7 +286,7 @@ function CheckoutPage() {
                       </div>
                       <div className="qr-code-container">
                         <img
-                          src="/images/nimb-qr.jpg"
+                          src="/nimb-qr.jpg"
                           alt="NIMB Bank QR Code"
                           className="qr-code-image"
                           onError={(e) => {
@@ -305,7 +305,7 @@ function CheckoutPage() {
                       </div>
                       <div className="qr-code-container">
                         <img
-                          src="/images/esewa-qr.png"
+                          src="/esewa-qr.png"
                           alt="eSewa QR Code"
                           className="qr-code-image"
                           onError={(e) => {
