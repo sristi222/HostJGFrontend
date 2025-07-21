@@ -160,7 +160,20 @@ function Footer() {
           <p className="copyright" onClick={handleCopyrightClick}>
             &copy; {currentYear} JG Store. All Rights Reserved.
           </p>
-          <p className="developer-credit">Designed and developed by Zenkai Studio</p>
+          <p className="developer-credit">
+        {" "}
+        <a
+  href="https://www.zenkaistudio.com/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="developer-credit-link"
+>
+  <p className="developer-credit">
+    Designed and developed by Zenkai Studio
+  </p>
+</a>
+
+      </p>
         </div>
       </div>
     </footer>
