@@ -16,7 +16,7 @@ function Navbar() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/categories")
+        const response = await fetch("https://jgenterprisebackend.onrender.com/api/categories")
         if (!response.ok) {
           throw new Error("Failed to fetch categories")
         }
