@@ -1,5 +1,4 @@
 "use client"
-
 import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useCart } from "../context/CartContext"
@@ -17,6 +16,7 @@ function CheckoutPage() {
   const [formErrors, setFormErrors] = useState({})
   const [orderMessage, setOrderMessage] = useState("")
   const [isLoading, setIsLoading] = useState(true)
+  const [paymentMethod, setPaymentMethod] = useState("") // "pay-later" or "pay-now"
 
   // Calculate discounted total
   const calculateDiscountedTotal = () => {
@@ -49,7 +49,6 @@ function CheckoutPage() {
     const timer = setTimeout(() => {
       setIsLoading(false)
     }, 100)
-
     return () => clearTimeout(timer)
   }, [])
 
@@ -61,13 +60,17 @@ function CheckoutPage() {
     })
   }
 
+  const handlePaymentMethodChange = (method) => {
+    setPaymentMethod(method)
+  }
+
   const validateForm = () => {
     const errors = {}
     if (!formData.firstName.trim()) errors.firstName = "First name is required"
     if (!formData.lastName.trim()) errors.lastName = "Last name is required"
     if (!formData.phone.trim()) errors.phone = "Phone number is required"
     if (!formData.address.trim()) errors.address = "Address is required"
-
+    if (!paymentMethod) errors.paymentMethod = "Please select a payment method"
     setFormErrors(errors)
     return Object.keys(errors).length === 0
   }
@@ -85,32 +88,29 @@ function CheckoutPage() {
   const prepareOrderMessage = () => {
     const orderDate = formatDate()
     let message = `*New Order - ${orderDate}*\n\n`
-
     message += `*Customer Details:*\n`
     message += `Name: ${formData.firstName} ${formData.lastName}\n`
     message += `Phone: ${formData.phone}\n`
     message += `Address: ${formData.address}\n\n`
-
+    message += `*Payment Method:* ${paymentMethod === "pay-later" ? "Pay at Store Pickup" : "Paid via QR Code"}\n\n`
     message += `*Order Items:*\n`
     cart.forEach((item, index) => {
       const { name, quantity: optionQuantity, price } = getCartItemDisplay(item)
       const finalPrice = item.finalPrice || item.price
       const isOnSale = (item.onSale || item.sale) && item.salePrice
       const originalPrice = isOnSale ? item.price : null
-
       message += `${index + 1}. ${name} (${optionQuantity}) - ${item.quantity} x NRs.${finalPrice}`
       if (isOnSale && originalPrice > finalPrice) {
         message += ` (was NRs.${originalPrice})`
       }
       message += ` = NRs.${finalPrice * item.quantity}\n`
     })
-
     if (totalSavings > 0) {
       message += `\n*Total Savings: NRs.${totalSavings}*\n`
     }
     message += `\n*Subtotal: NRs.${discountedTotal}*`
     message += `\n*Total: NRs.${discountedTotal}*\n\n`
-
+    message += `*Pickup Instructions:* Customer will pick up order at store location.`
     return message
   }
 
@@ -119,22 +119,16 @@ function CheckoutPage() {
       window.scrollTo({ top: 0, behavior: "smooth" })
       return
     }
-
     const message = prepareOrderMessage()
     const encodedMessage = encodeURIComponent(message)
-
     // Replace with your WhatsApp number
     const whatsappNumber = "9779841241832"
-
     // Create WhatsApp URL
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`
-
     // Open WhatsApp in a new tab
     window.open(whatsappUrl, "_blank")
-
     // Clear cart after successful checkout
     clearCart()
-
     // Redirect to success page
     navigate("/checkout/success")
   }
@@ -144,19 +138,14 @@ function CheckoutPage() {
       window.scrollTo({ top: 0, behavior: "smooth" })
       return
     }
-
     const message = prepareOrderMessage()
     const encodedMessage = encodeURIComponent(message)
-
     // Create SMS URL (works on mobile devices)
     const smsUrl = `sms:+9779841241832?body=${encodedMessage}`
-
     // Open SMS app
     window.location.href = smsUrl
-
     // Clear cart after successful checkout
     clearCart()
-
     // Redirect to success page
     navigate("/checkout/success")
   }
@@ -173,16 +162,14 @@ function CheckoutPage() {
           <h1>CHECKOUT</h1>
           <h2>Complete Your Order</h2>
         </div>
-
         <div className="checkout-content">
-          {/* Delivery Information (Form) section - First in HTML for desktop order */}
+          {/* Customer Information (Form) section */}
           <div className="checkout-form-section">
             <div className="checkout-form">
-              <h3>Delivery Information</h3>
+              <h3>Customer Information</h3>
               <p className="checkout-instruction">
-                Please fill up the following information so that we can call you for your delivery information.
+                Please provide your contact information. Your order will be ready for pickup at our store.
               </p>
-
               <div className="form-row">
                 <div className="form-group">
                   <label htmlFor="firstName">First Name *</label>
@@ -209,7 +196,6 @@ function CheckoutPage() {
                   {formErrors.lastName && <div className="error-message">{formErrors.lastName}</div>}
                 </div>
               </div>
-
               <div className="form-row">
                 <div className="form-group full-width">
                   <label htmlFor="phone">Phone Number *</label>
@@ -224,10 +210,9 @@ function CheckoutPage() {
                   {formErrors.phone && <div className="error-message">{formErrors.phone}</div>}
                 </div>
               </div>
-
               <div className="form-row">
                 <div className="form-group full-width">
-                  <label htmlFor="address">Delivery Address *</label>
+                  <label htmlFor="address">Contact Address *</label>
                   <input
                     type="text"
                     id="address"
@@ -241,11 +226,121 @@ function CheckoutPage() {
                 </div>
               </div>
 
+              {/* Payment Method Selection */}
+              <div className="payment-method-section">
+                <h3>Payment Method *</h3>
+                <p>Choose how you'd like to pay for your order:</p>
+                <div className="payment-method-options">
+                  <div
+                    className={`payment-method-card ${paymentMethod === "pay-later" ? "selected" : ""}`}
+                    onClick={() => handlePaymentMethodChange("pay-later")}
+                  >
+                    <div className="payment-method-icon">🏪</div>
+                    <div className="payment-method-info">
+                      <h4>Pay at Store</h4>
+                      <p>Pay when you pick up your order</p>
+                    </div>
+                    <div className="payment-method-radio">
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="pay-later"
+                        checked={paymentMethod === "pay-later"}
+                        onChange={() => handlePaymentMethodChange("pay-later")}
+                      />
+                    </div>
+                  </div>
+                  <div
+                    className={`payment-method-card ${paymentMethod === "pay-now" ? "selected" : ""}`}
+                    onClick={() => handlePaymentMethodChange("pay-now")}
+                  >
+                    <div className="payment-method-icon">📱</div>
+                    <div className="payment-method-info">
+                      <h4>Pay Now</h4>
+                      <p>Pay instantly via QR code</p>
+                    </div>
+                    <div className="payment-method-radio">
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="pay-now"
+                        checked={paymentMethod === "pay-now"}
+                        onChange={() => handlePaymentMethodChange("pay-now")}
+                      />
+                    </div>
+                  </div>
+                </div>
+                {formErrors.paymentMethod && <div className="error-message">{formErrors.paymentMethod}</div>}
+              </div>
+
+              {/* QR Payment Section - Only show when "Pay Now" is selected */}
+              {paymentMethod === "pay-now" && (
+                <div className="qr-payment-section">
+                  <h3>QR Payment Options</h3>
+                  <p>Scan any QR code below to pay NRs. {discountedTotal}:</p>
+                  <div className="qr-payment-grid">
+                    <div className="qr-payment-card">
+                      <div className="qr-payment-header">
+                        <h4>Bank Transfer</h4>
+                        <span className="payment-badge bank">NIMB</span>
+                      </div>
+                      <div className="qr-code-container">
+                        <img
+                          src="/images/nimb-qr.jpg"
+                          alt="NIMB Bank QR Code"
+                          className="qr-code-image"
+                          onError={(e) => {
+                            console.log("NIMB QR image failed to load")
+                            e.target.style.display = "none"
+                          }}
+                        />
+                      </div>
+                      
+                    </div>
+
+                    <div className="qr-payment-card">
+                      <div className="qr-payment-header">
+                        <h4>Esewa</h4>
+                        <span className="payment-badge esewa">eSewa</span>
+                      </div>
+                      <div className="qr-code-container">
+                        <img
+                          src="/images/esewa-qr.png"
+                          alt="eSewa QR Code"
+                          className="qr-code-image"
+                          onError={(e) => {
+                            console.log("eSewa QR image failed to load")
+                            e.target.style.display = "none"
+                          }}
+                        />
+                      </div>
+                     
+                    </div>
+                  </div>
+                  <div className="qr-payment-note">
+                    <p>
+                      <strong>Important:</strong> After making payment via QR, please send us a screenshot of the
+                      payment confirmation along with your order details using the checkout buttons below.
+                    </p>
+                  </div>
+                </div>
+              )}
+
               <div className="checkout-messaging-options">
-                <h3>Checkout Options</h3>
-                <p>Complete your order via messaging apps:</p>
+                <h3>Complete Your Order</h3>
+                <p>
+                  {paymentMethod === "pay-later"
+                    ? "Send your order details and we'll prepare it for store pickup:"
+                    : paymentMethod === "pay-now"
+                      ? "After payment, send your order details and payment screenshot for store pickup:"
+                      : "Please select a payment method first"}
+                </p>
                 <div className="messaging-checkout-buttons">
-                  <button className="whatsapp-checkout-btn" onClick={handleCheckoutViaWhatsApp}>
+                  <button
+                    className="whatsapp-checkout-btn"
+                    onClick={handleCheckoutViaWhatsApp}
+                    disabled={!paymentMethod}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
@@ -257,7 +352,7 @@ function CheckoutPage() {
                     </svg>
                     Checkout via WhatsApp
                   </button>
-                  <button className="sms-checkout-btn" onClick={handleCheckoutViaSMS}>
+                  <button className="sms-checkout-btn" onClick={handleCheckoutViaSMS} disabled={!paymentMethod}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
@@ -275,7 +370,6 @@ function CheckoutPage() {
                   </button>
                 </div>
               </div>
-
               <div className="checkout-actions">
                 <Link to="/cart" className="back-to-cart-btn">
                   Back to Cart
@@ -284,7 +378,7 @@ function CheckoutPage() {
             </div>
           </div>
 
-          {/* Order Summary - Second in HTML for desktop order */}
+          {/* Order Summary */}
           <div className="checkout-summary">
             <div className="summary-header">
               <h3>Order Summary</h3>
@@ -297,7 +391,6 @@ function CheckoutPage() {
                   const finalPrice = item.finalPrice || item.price
                   const isOnSale = (item.onSale || item.sale) && item.salePrice
                   const originalPrice = isOnSale ? item.price : null
-
                   return (
                     <div className="summary-item" key={item.cartItemKey || item.id || item._id}>
                       <div className="summary-item-info">
@@ -305,18 +398,15 @@ function CheckoutPage() {
                           <span className="summary-item-name">{displayInfo.name}</span>
                           {isOnSale && <span className="summary-item-sale">SALE</span>}
                         </div>
-
                         {/* Display selected quantity option */}
                         <div className="summary-item-option-row">
                           <span className="summary-item-option">{displayInfo.quantity}</span>
                           <span className="summary-item-price-each">NRs. {finalPrice} each</span>
                         </div>
-
                         <div className="summary-item-quantity-row">
                           <span className="summary-item-quantity">Quantity: {item.quantity}</span>
                         </div>
                       </div>
-
                       <div className="summary-item-pricing">
                         <span className="summary-item-price">NRs. {finalPrice * item.quantity}</span>
                         {isOnSale && originalPrice && originalPrice > finalPrice && (
@@ -327,7 +417,6 @@ function CheckoutPage() {
                   )
                 })}
               </div>
-
               {totalSavings > 0 && (
                 <div className="summary-row savings-row">
                   <span>Total Savings</span>
