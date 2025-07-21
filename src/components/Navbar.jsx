@@ -3,13 +3,7 @@
 import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useCart } from "../context/CartContext"
-import {
-  Menu as MenuIcon,
-  X as XIcon,
-  Search as SearchIcon,
-  Phone as PhoneIcon,
-  ShoppingCart as ShoppingCartIcon,
-} from "lucide-react"
+import { MenuIcon, XIcon, SearchIcon, PhoneIcon, ShoppingCartIcon } from "lucide-react"
 import "./Navbar.css"
 
 function Navbar() {
@@ -22,9 +16,10 @@ function Navbar() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch("https://jgenterprisebackend.onrender.com/api/categories")
-        if (!response.ok) throw new Error("Failed to fetch categories")
-
+        const response = await fetch("http://localhost:5000/api/categories")
+        if (!response.ok) {
+          throw new Error("Failed to fetch categories")
+        }
         const data = await response.json()
         const formatted = data.map((cat) => ({ id: cat._id, name: cat.name }))
         setAvailableCategories(formatted)
@@ -41,7 +36,6 @@ function Navbar() {
         setAvailableCategories(formatted)
       }
     }
-
     fetchCategories()
   }, [])
 
@@ -77,6 +71,7 @@ function Navbar() {
             <div className="grocery-logo-text">JG Store</div>
           </Link>
 
+          {/* Search container is back inside main-navbar for desktop and mobile wrapping */}
           <div className="grocery-search-container">
             <form onSubmit={handleSearch} className="grocery-search-bar">
               <SearchIcon className="grocery-search-icon" size={18} />
@@ -120,6 +115,7 @@ function Navbar() {
         </div>
       </div>
 
+      {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div className="grocery-mobile-menu mobile-only">
           <div className="grocery-mobile-menu-header">
@@ -135,7 +131,6 @@ function Navbar() {
               <XIcon size={24} />
             </button>
           </div>
-
           <div className="grocery-mobile-search-container">
             <form onSubmit={handleSearch} className="grocery-search-bar">
               <SearchIcon className="grocery-search-icon" size={18} />
@@ -148,7 +143,6 @@ function Navbar() {
               />
             </form>
           </div>
-
           <nav className="grocery-mobile-nav-links">
             <Link to="/about" className="grocery-mobile-nav-link" onClick={handleNavLinkClick}>
               About Us
