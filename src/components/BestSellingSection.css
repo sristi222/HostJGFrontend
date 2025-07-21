@@ -1,6 +1,7 @@
+/* BestSelling Products Section - Updated to match navbar theme */
 .bestsell-prod-section {
   padding: 60px 0 60px;
-  background-color: #f9f6f0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
   margin-top: 0;
 }
 
@@ -9,8 +10,6 @@
   margin: 0 auto;
   padding: 0 20px;
 }
-
-
 
 .bestsell-prod-header {
   display: flex;
@@ -22,7 +21,7 @@
 .bestsell-prod-title {
   font-size: 24px;
   font-weight: 700;
-  color: #333;
+  color: #60bb46;
   position: relative;
   padding-bottom: 10px;
 }
@@ -34,20 +33,26 @@
   left: 0;
   width: 60px;
   height: 3px;
-  background-color: #c22126;
+  background: linear-gradient(90deg, #ff8c42, #60bb46);
 }
 
 .bestsell-prod-view-all {
-  color: #c22126;
+  color: #ff8c42;
   font-weight: 600;
   text-decoration: none;
   font-size: 14px;
-  transition: color 0.2s;
+  transition: all 0.3s ease;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 140, 66, 0.3);
 }
 
 .bestsell-prod-view-all:hover {
-  color: #a51d21;
-  text-decoration: underline;
+  color: #60bb46;
+  background-color: rgba(255, 140, 66, 0.1);
+  border-color: #ff8c42;
+  text-decoration: none;
+  transform: translateY(-1px);
 }
 
 /* Carousel */
@@ -65,18 +70,22 @@
   height: 40px;
   border-radius: 50%;
   background-color: white;
-  border: 1px solid #ddd;
+  border: 2px solid rgba(255, 140, 66, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   z-index: 10;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.2s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  color: #60bb46;
 }
 
 .bestsell-prod-carousel-arrow:hover {
-  background-color: #f5f5f5;
+  background-color: #ff8c42;
+  color: white;
+  border-color: #ff8c42;
+  transform: translateY(-50%) scale(1.1);
 }
 
 .bestsell-prod-carousel-prev {
@@ -92,48 +101,66 @@
   overflow-x: auto;
   scroll-behavior: smooth;
   padding: 10px 5px;
-  scrollbar-width: none;
+  scrollbar-width: thin;
+  scrollbar-color: #ff8c42 #f1f1f1;
   -ms-overflow-style: none;
   gap: 20px;
   scroll-snap-type: x mandatory;
 }
 
 .bestsell-prod-grid::-webkit-scrollbar {
-  display: none;
+  height: 4px;
+}
+
+.bestsell-prod-grid::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 2px;
+}
+
+.bestsell-prod-grid::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #ff8c42, #60bb46);
+  border-radius: 2px;
+}
+
+.bestsell-prod-grid::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg, #ff7a2b, #1a3009);
 }
 
 /* Product Card */
 .bestsell-card-product-card {
   background-color: white;
-  border-radius: 8px;
+  border-radius: 12px;
   position: relative;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: all 0.3s ease;
   overflow: hidden;
   flex: 0 0 280px;
   width: 280px;
   height: 400px;
   scroll-snap-align: start;
+  border: 1px solid rgba(255, 140, 66, 0.1);
 }
 
 .bestsell-card-product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transform: translateY(-8px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border-color: rgba(255, 140, 66, 0.3);
 }
 
 .bestsell-card-sale-tag {
   position: absolute;
   top: 12px;
   left: 12px;
-  background-color: #c22126;
+  background: linear-gradient(135deg, #ff8c42, #ff7a2b);
   color: white;
   font-size: 12px;
   font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 4px;
+  padding: 6px 12px;
+  border-radius: 6px;
   z-index: 2;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .bestsell-card-image-container {
@@ -143,17 +170,18 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  background: linear-gradient(135deg, #f8f9fa, #ffffff);
 }
 
 .bestsell-card-product-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s;
+  transition: transform 0.5s ease;
 }
 
 .bestsell-card-product-card:hover .bestsell-card-product-image {
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
 .bestsell-card-quantity-badge {
@@ -163,9 +191,9 @@
   color: white;
   font-size: 12px;
   font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 4px 0 0 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  padding: 6px 12px;
+  border-radius: 6px 0 0 0;
+  background: linear-gradient(135deg, rgba(96, 187, 70, 0.9), rgba(26, 48, 9, 0.9));
 }
 
 /* Info Block */
@@ -178,8 +206,8 @@
 
 .bestsell-card-product-name {
   font-size: 16px;
-  font-weight: 500;
-  color: #333;
+  font-weight: 600;
+  color: #60bb46;
   margin: 0 0 8px;
   line-height: 1.4;
   height: 44px;
@@ -192,13 +220,14 @@
 .bestsell-card-product-category {
   font-size: 12px;
   color: #666;
-  background-color: #f5f5f5;
+  background: linear-gradient(135deg, rgba(255, 140, 66, 0.1), rgba(96, 187, 70, 0.05));
   display: inline-block;
-  padding: 3px 8px;
-  border-radius: 4px;
+  padding: 4px 10px;
+  border-radius: 6px;
   margin-bottom: 12px;
   width: 100%;
   text-align: center;
+  border: 1px solid rgba(255, 140, 66, 0.2);
 }
 
 /* Pricing */
@@ -211,8 +240,8 @@
 
 .bestsell-card-current-price {
   font-size: 18px;
-  font-weight: 600;
-  color: black;
+  font-weight: 700;
+  color: #60bb46;
 }
 
 .bestsell-card-original-price {
@@ -236,34 +265,39 @@
 .bestsell-card-buy-now-btn {
   flex: 1;
   border: none;
-  border-radius: 4px;
-  padding: 10px 0;
+  border-radius: 6px;
+  padding: 12px 0;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 400; /* Changed from 600 to 400 */
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
   text-transform: uppercase;
   white-space: nowrap;
+  letter-spacing: 0.5px;
 }
 
 .bestsell-card-add-to-cart-btn {
-  background-color: #c22126;
+  background: linear-gradient(135deg, #ff8c42, #ff7a2b);
   color: white;
+  box-shadow: 0 2px 6px rgba(255, 140, 66, 0.3);
 }
 
 .bestsell-card-add-to-cart-btn:hover {
-  background-color: #a51d21;
+  background: linear-gradient(135deg, #ff7a2b, #ff6b1a);
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 140, 66, 0.4);
 }
 
 .bestsell-card-buy-now-btn {
-  background-color: #2d5016;
+  background: linear-gradient(135deg, #60bb46, #1a3009);
   color: white;
+  box-shadow: 0 2px 6px rgba(96, 187, 70, 0.3);
 }
 
 .bestsell-card-buy-now-btn:hover {
-  background-color: #267349;
+  background: linear-gradient(135deg, #1a3009, #0f1a05);
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(96, 187, 70, 0.4);
 }
 
 /* Mobile Optimizations */
@@ -272,17 +306,14 @@
     width: 36px;
     height: 36px;
   }
-
   .bestsell-card-product-card {
     flex: 0 0 260px;
     width: 260px;
     height: auto;
   }
-
   .bestsell-card-image-container {
     height: 160px;
   }
-
   .bestsell-prod-title {
     font-size: 20px;
     max-width: 70%;
@@ -294,43 +325,34 @@
     width: 32px;
     height: 32px;
   }
-
   .bestsell-card-product-card {
     flex: 0 0 220px;
     width: 220px;
     height: auto;
   }
-
   .bestsell-card-product-info {
     padding: 14px;
   }
-
   .bestsell-card-product-name {
     font-size: 14px;
   }
-
   .bestsell-card-current-price {
     font-size: 16px;
   }
-
   .bestsell-card-original-price {
     font-size: 12px;
   }
-
   .bestsell-card-button-group {
     gap: 6px;
   }
-
   .bestsell-card-add-to-cart-btn,
   .bestsell-card-buy-now-btn {
     font-size: 10px;
     padding: 8px 0;
   }
-
   .bestsell-card-product-price {
     margin-bottom: 10px;
   }
-
   .bestsell-card-product-actions {
     margin-top: 6px;
   }
