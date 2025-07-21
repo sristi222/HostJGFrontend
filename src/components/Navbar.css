@@ -8,9 +8,9 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Main navbar - Updated to green background */
+/* Main navbar - Updated to client's preferred green background */
 .grocery-main-navbar {
-  background: #498e41;
+  background: linear-gradient(135deg, #4CAF50 0%, #66BB6A 100%);
   padding: 12px 20px;
   border-bottom: 3px solid #ff8c42;
 }
@@ -93,9 +93,9 @@
   transform: scale(1.05);
 }
 
-/* Change logo text color for the mobile menu header to green */
+/* Change logo text color for the mobile menu header to client's green */
 .grocery-mobile-menu-header .grocery-logo-text {
-  color: #2d5016;
+  color: #60bb46;
   font-size: 20px;
   font-weight: bold;
 }
@@ -127,7 +127,7 @@
 .grocery-search-icon {
   position: absolute;
   left: 16px;
-  color: #2d5016;
+  color: #60bb46;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -144,7 +144,7 @@
   outline: none;
   font-size: 15px;
   background-color: transparent;
-  color: #2d5016;
+  color: #4CAF50;
   font-weight: 500;
 }
 
@@ -162,7 +162,7 @@
 }
 
 .grocery-nav-link {
-  color: white;
+  color: white; /* Keep text white for visibility on green background */
   text-decoration: none;
   font-weight: 600;
   padding: 8px 16px;
@@ -174,8 +174,8 @@
 }
 
 .grocery-nav-link:hover {
-  background-color: rgba(255, 140, 66, 0.2);
-  color: #ff8c42;
+  background-color: rgba(255, 255, 255, 0.2); /* Subtle white background on hover */
+  color: white; /* Keep text white */
   transform: translateY(-1px);
 }
 
@@ -185,19 +185,19 @@
   color: white;
   padding: 10px 16px;
   border-radius: 8px;
-  background: linear-gradient(135deg, rgba(255, 140, 66, 0.2), rgba(255, 140, 66, 0.1));
-  border: 1px solid rgba(255, 140, 66, 0.3);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1)); /* Changed from green to white */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Changed from green to white */
   transition: all 0.3s ease;
 }
 
 .grocery-order-section:hover {
-  background: linear-gradient(135deg, rgba(255, 140, 66, 0.3), rgba(255, 140, 66, 0.2));
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.2)); /* Changed from green to white */
   transform: translateY(-1px);
 }
 
 .grocery-phone-icon {
   margin-right: 10px;
-  color: #ff8c42;
+  color: white; /* Changed from green to white */
 }
 
 .grocery-order-label {
@@ -212,12 +212,12 @@
   font-weight: 700;
   line-height: 1.2;
   font-size: 15px;
-  color: white;
+  color: white; /* Changed from green to white */
   text-decoration: none;
 }
 
 .grocery-order-number:hover {
-  color: #ff8c42;
+  color: #f0f0f0; /* Changed from dark green to light grey for hover */
   text-decoration: underline;
 }
 
@@ -309,16 +309,16 @@
 }
 
 .grocery-categories-list::-webkit-scrollbar-thumb {
-  background: linear-gradient(90deg, #ff8c42, #2d5016);
+  background: linear-gradient(90deg, #ff8c42, #60bb46);
   border-radius: 2px;
 }
 
 .grocery-categories-list::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(90deg, #ff7a2b, #1a3009);
+  background: linear-gradient(90deg, #ff7a2b, #60bb46);
 }
 
 .grocery-category-item {
-  color: #2d5016;
+  color: #60bb46;
   font-weight: 600;
   text-decoration: none;
   margin-right: 32px;
@@ -347,7 +347,7 @@
   left: 50%;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #ff8c42, #2d5016);
+  background: linear-gradient(90deg, #ff8c42, #4CAF50);
   transition: all 0.3s ease;
   transform: translateX(-50%);
 }
@@ -422,7 +422,7 @@
 }
 
 .grocery-mobile-menu-header .grocery-logo-text {
-  color: #2d5016;
+  color: #4CAF50;
   font-size: 22px;
   font-weight: 700;
 }
@@ -430,7 +430,7 @@
 .grocery-mobile-menu-header button {
   background: none;
   border: none;
-  color: #2d5016;
+  color: #60bb46;
   cursor: pointer;
   padding: 8px;
   border-radius: 6px;
@@ -454,7 +454,7 @@
 
 .grocery-mobile-nav-link,
 .grocery-mobile-nav-links .grocery-category-item {
-  color: #2d5016;
+  color: #4CAF50;
   text-decoration: none;
   font-size: 16px;
   font-weight: 600;
@@ -466,30 +466,30 @@
 
 .grocery-mobile-nav-link:hover,
 .grocery-mobile-nav-links .grocery-category-item:hover {
-  background: linear-gradient(135deg, rgba(255, 140, 66, 0.1), rgba(45, 80, 22, 0.05));
-  color: #ff8c42;
-  border-color: rgba(255, 140, 66, 0.2);
+  background: linear-gradient(135deg, rgba(255, 140, 66, 0.1), rgba(76, 175, 80, 0.05)); /* Changed to orange for visibility on light background */
+  color: #ff8c42; /* Changed to orange for visibility on light background */
+  border-color: rgba(255, 140, 66, 0.2); /* Changed to orange for visibility on light background */
   transform: translateX(4px);
 }
 
 .grocery-order-section.mobile-only-phone {
   display: flex;
   align-items: center;
-  color: #2d5016;
+  color: #4CAF50;
   padding: 16px;
   margin-top: 20px;
   border-top: 2px solid #e5e7eb;
-  background: linear-gradient(135deg, rgba(255, 140, 66, 0.1), rgba(45, 80, 22, 0.05));
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05)); /* Changed to white for consistency */
   border-radius: 8px;
 }
 
 .grocery-order-section.mobile-only-phone .grocery-phone-icon {
-  color: #ff8c42;
+  color: #000000; /* Changed to black for visibility */
 }
 
 .grocery-order-section.mobile-only-phone .grocery-order-label,
 .grocery-order-section.mobile-only-phone .grocery-order-number {
-  color: #2d5016;
+  color: #000000; /* Changed to black for visibility */
 }
 
 /* Responsive Breakpoints */
@@ -573,7 +573,7 @@
   .grocery-mobile-nav-links,
   .grocery-mobile-nav-link,
   .grocery-order-section.mobile-only-phone {
-    display: none;
+    display: flex; /* Ensure these are displayed in mobile view */
   }
 
   .grocery-mobile-menu.mobile-only {
