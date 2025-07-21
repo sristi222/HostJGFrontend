@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import ProductCard from "../components/ProductCard"
-import "./ProductsPage.css"
+
 
 function ProductsPage() {
   const location = useLocation()
@@ -29,7 +29,7 @@ function ProductsPage() {
     const fetchProducts = async () => {
       setLoading(true)
       try {
-        const res = await fetch("https://jgenterprisebackend.onrender.com/api/products")
+        const res = await fetch("/api/products")
         const data = await res.json()
 
         if (data.success) {
@@ -44,7 +44,7 @@ function ProductsPage() {
 
     const fetchCategories = async () => {
       try {
-        const res = await fetch("https://jgenterprisebackend.onrender.com/api/categories")
+        const res = await fetch("/api/categories")
         const data = await res.json()
 
         console.log("Categories API response:", data)
