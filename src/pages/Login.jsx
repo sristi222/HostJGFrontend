@@ -43,7 +43,7 @@ function Login({ onLogin }) {
     <div className="login-container">
       <div className="login-card">
         <div className="login-header">
-          <h1>Dinesh Laal's Shop</h1>
+          <h1>JG Store</h1>
           <h2>Admin Panel</h2>
         </div>
 
