@@ -207,7 +207,7 @@
 .bestsell-card-product-name {
   font-size: 16px;
   font-weight: 600;
-  color: #60bb46;
+  color: black;
   margin: 0 0 8px;
   line-height: 1.4;
   height: 44px;
@@ -241,7 +241,7 @@
 .bestsell-card-current-price {
   font-size: 18px;
   font-weight: 700;
-  color: #60bb46;
+  color: black;
 }
 
 .bestsell-card-original-price {
