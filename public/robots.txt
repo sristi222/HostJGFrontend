@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://jgstorenepal.vercel.app/sitemap.xml
