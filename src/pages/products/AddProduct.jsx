@@ -41,7 +41,7 @@ const AddProductEnhanced = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/categories")
+        const res = await fetch("https://jgenterprisebackend.onrender.com/api/categories")
         if (res.ok) {
           const data = await res.json()
           setCategories(data)
@@ -178,7 +178,7 @@ const AddProductEnhanced = () => {
       formDataToSend.append("image", formData.image)
     }
     try {
-      const res = await fetch("http://localhost:5000/api/products", {
+      const res = await fetch("https://jgenterprisebackend.onrender.com/api/products", {
         method: "POST",
         body: formDataToSend,
       })
