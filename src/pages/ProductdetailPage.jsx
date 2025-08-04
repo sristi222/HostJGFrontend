@@ -1,5 +1,4 @@
 "use client"
-
 import { useState, useEffect } from "react"
 import { useParams, Link, useNavigate } from "react-router-dom"
 import { useCart } from "../context/CartContext"
@@ -10,7 +9,6 @@ function ProductDetailPage() {
   const { productId } = useParams()
   const navigate = useNavigate()
   const { cart, addToCart, addToCartSilently } = useCart()
-
   const [product, setProduct] = useState(null)
   const [quantity, setQuantity] = useState(1)
   const [selectedQuantityOption, setSelectedQuantityOption] = useState(0)
@@ -22,7 +20,7 @@ function ProductDetailPage() {
     const fetchProduct = async () => {
       setLoading(true)
       try {
-        const res = await fetch(`https://jgenterprisebackend.onrender.com/api/products/${productId}`)
+        const res = await fetch(`http://localhost:5000/api/products/${productId}`)
         const data = await res.json()
         if (res.ok) {
           setProduct(data)
@@ -38,10 +36,9 @@ function ProductDetailPage() {
         setLoading(false)
       }
     }
-
     const fetchSimilarProducts = async () => {
       try {
-        const res = await fetch(`https://jgenterprisebackend.onrender.com/api/products/similar/${productId}`)//
+        const res = await fetch(`http://localhost:5000/api/products/similar/${productId}`)
         const data = await res.json()
         if (res.ok) {
           setSimilarProducts(data)
@@ -53,7 +50,6 @@ function ProductDetailPage() {
         setSimilarProducts([])
       }
     }
-
     if (productId) {
       fetchProduct()
       fetchSimilarProducts()
@@ -63,8 +59,8 @@ function ProductDetailPage() {
   const getImageUrl = (path) => {
     if (!path) return "/placeholder.svg"
     if (path.startsWith("http")) return path
-    if (path.startsWith("/uploads/")) return `https://jgenterprisebackend.onrender.com${path}`
-    return `https://jgenterprisebackend.onrender.com/uploads/${path.replace(/^.*[\\/]/, "")}`
+    if (path.startsWith("/uploads/")) return `http://localhost:5000${path}`
+    return `http://localhost:5000/uploads/${path.replace(/^.*[\\/]/, "")}`
   }
 
   const getSafe = (value, field = "name") => {
@@ -74,9 +70,7 @@ function ProductDetailPage() {
   // Create a combined array of all quantity options (default + custom)
   const getAllQuantityOptions = () => {
     if (!product) return []
-
     const options = []
-
     // Always add the default quantity as the first option
     const defaultOption = {
       amount: product.defaultQuantity || "1",
@@ -86,7 +80,6 @@ function ProductDetailPage() {
       isDefault: true,
     }
     options.push(defaultOption)
-
     // Add custom quantity options if they exist
     if (product.customQuantityOptions && Array.isArray(product.customQuantityOptions)) {
       product.customQuantityOptions.forEach((option) => {
@@ -96,14 +89,12 @@ function ProductDetailPage() {
         })
       })
     }
-
     return options
   }
 
   // Get current price based on selected quantity option
   const getCurrentPrice = () => {
     if (!product) return 0
-
     const allOptions = getAllQuantityOptions()
     const selectedOption = allOptions[selectedQuantityOption]
     return selectedOption?.price || product.price
@@ -112,7 +103,6 @@ function ProductDetailPage() {
   // Get current quantity display
   const getCurrentQuantityDisplay = () => {
     if (!product) return "1 kg"
-
     const allOptions = getAllQuantityOptions()
     const selectedOption = allOptions[selectedQuantityOption]
     return `${selectedOption?.amount || "1"} ${selectedOption?.unit || "kg"}`
@@ -132,16 +122,12 @@ function ProductDetailPage() {
   // Calculate the display price and original price based on sale status
   const getPriceDisplay = (productItem) => {
     if (!productItem) return { currentPrice: 0, originalPrice: null, isOnSale: false }
-
     const currentPrice = getCurrentPrice()
-
     if ((productItem.onSale || productItem.sale) && productItem.salePrice) {
       // Calculate the discount percentage from the original product
       const discountPercentage = ((productItem.price - productItem.salePrice) / productItem.price) * 100
-
       // Apply the same discount percentage to the current selected option price
       const discountedCurrentPrice = currentPrice - currentPrice * (discountPercentage / 100)
-
       return {
         currentPrice: Math.round(discountedCurrentPrice * 100) / 100, // Round to 2 decimal places
         originalPrice: currentPrice,
@@ -173,16 +159,10 @@ function ProductDetailPage() {
       const allOptions = getAllQuantityOptions()
       const selectedOption = allOptions[selectedQuantityOption]
       const { currentPrice } = getPriceDisplay(product)
-      const productToAdd = {
-  ...product,
-  quantity,
-  finalPrice: currentPrice,
-}
-
-if (selectedOption && !selectedOption.isDefault) {
-  productToAdd.selectedQuantityOption = selectedOption
-}
-
+      const productToAdd = { ...product, quantity, finalPrice: currentPrice }
+      if (selectedOption && !selectedOption.isDefault) {
+        productToAdd.selectedQuantityOption = selectedOption
+      }
       addToCart(productToAdd)
     }
   }
@@ -204,7 +184,6 @@ if (selectedOption && !selectedOption.isDefault) {
   }
 
   const isInCart = () => cart.some((item) => item._id?.toString() === productId || item.id?.toString() === productId)
-
   const getCartQuantity = () => {
     const item = cart.find((item) => item._id?.toString() === productId || item.id?.toString() === productId)
     return item ? item.quantity : 0
@@ -241,7 +220,6 @@ if (selectedOption && !selectedOption.isDefault) {
         <div className="pd-breadcrumb">
           <Link to="/">Home</Link> &gt; <Link to="/products">Products</Link> &gt; <span>{getSafe(product.name)}</span>
         </div>
-
         <div className="pd-main-content-wrapper">
           <div className="pd-content">
             {/* Product Images Section */}
@@ -265,7 +243,6 @@ if (selectedOption && !selectedOption.isDefault) {
                   style={{ objectFit: "cover", width: "100%", height: "100%" }}
                 />
               </div>
-
               {product.images?.length > 1 && (
                 <div className="pd-thumbnails">
                   {product.images.map((img, i) => (
@@ -289,59 +266,62 @@ if (selectedOption && !selectedOption.isDefault) {
                 </div>
               )}
             </div>
-
             {/* Product Info Section */}
             <div className="pd-info">
               <h1 className="pd-title">{getSafe(product.name)}</h1>
-
               {/* Quantity Options - Always show (default + custom options) */}
               {allQuantityOptions.length > 1 && (
-  <div className="pd-quantity-options">
-    <h3>Select Quantity:</h3>
-    <div className="quantity-options-grid">
-      {allQuantityOptions.map((option, index) => {
-        const discount = getOptionDiscount(option)
-
-        let optionDisplayPrice = option.price
-        let optionOriginalPrice = null
-
-        if (product.onSale && product.salePrice) {
-          const discountPercentage = ((product.price - product.salePrice) / product.price) * 100
-          optionDisplayPrice = option.price - option.price * (discountPercentage / 100)
-          optionDisplayPrice = Math.round(optionDisplayPrice * 100) / 100
-          optionOriginalPrice = option.price
-        }
-
-        return (
-          <div
-            key={index}
-            className={`quantity-option ${selectedQuantityOption === index ? "selected" : ""} ${option.isDefault ? "first-option" : ""}`}
-            onClick={() => setSelectedQuantityOption(index)}
-          >
-            {product.onSale && (
-              <div className="option-discount-badge">
-                {Math.round(((product.price - product.salePrice) / product.price) * 100)}% OFF
-              </div>
-            )}
-            <div className="option-amount">
-              {option.amount} {option.unit}
-            </div>
-            <div className="option-price">
-              ₹{optionDisplayPrice}
-              {optionOriginalPrice && (
-                <span className="option-mrp" style={{ textDecoration: "line-through", marginLeft: "8px", fontSize: "0.9em", color: "#999" }}>
-                  MRP ₹{optionOriginalPrice}
-                </span>
+                <div className="pd-quantity-options">
+                  <h3>Select Quantity:</h3>
+                  <div className="quantity-options-grid">
+                    {allQuantityOptions.map((option, index) => {
+                      const discount = getOptionDiscount(option)
+                      let optionDisplayPrice = option.price
+                      let optionOriginalPrice = null
+                      if (product.onSale && product.salePrice) {
+                        const discountPercentage = ((product.price - product.salePrice) / product.price) * 100
+                        optionDisplayPrice = option.price - option.price * (discountPercentage / 100)
+                        optionDisplayPrice = Math.round(optionDisplayPrice * 100) / 100
+                        optionOriginalPrice = option.price
+                      }
+                      return (
+                        <div
+                          key={index}
+                          className={`quantity-option ${selectedQuantityOption === index ? "selected" : ""} ${
+                            option.isDefault ? "first-option" : ""
+                          }`}
+                          onClick={() => setSelectedQuantityOption(index)}
+                        >
+                          {product.onSale && (
+                            <div className="option-discount-badge">
+                              {Math.round(((product.price - product.salePrice) / product.price) * 100)}% OFF
+                            </div>
+                          )}
+                          <div className="option-amount">
+                            {option.amount} {option.unit}
+                          </div>
+                          <div className="option-price">
+                            ₹{optionDisplayPrice}
+                            {optionOriginalPrice && (
+                              <span
+                                className="option-mrp"
+                                style={{
+                                  textDecoration: "line-through",
+                                  marginLeft: "8px",
+                                  fontSize: "0.9em",
+                                  color: "#999",
+                                }}
+                              >
+                                MRP ₹{optionOriginalPrice}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
               )}
-            </div>
-          </div>
-        )
-      })}
-    </div>
-  </div>
-)}
-
-
               <div className="pd-price-container">
                 <span className="pd-price">NRs. {currentPrice}</span>
                 {originalPrice && <span className="pd-original-price">NRs. {originalPrice}</span>}
@@ -349,14 +329,18 @@ if (selectedOption && !selectedOption.isDefault) {
                   <span className="pd-savings">You save {discountPercentage}%!</span>
                 )}
               </div>
-
               {allQuantityOptions.length > 1 && (
-  <div className="pd-selected-quantity">
-    <span>Selected: {getCurrentQuantityDisplay()}</span>
-  </div>
-)}
-
-
+                <div className="pd-selected-quantity">
+                  <span>Selected: {getCurrentQuantityDisplay()}</span>
+                </div>
+              )}
+              {/* Updated: Stock as a button */}
+              <button
+                className={`pd-stock-button ${product.stock > 0 ? "in-stock" : "out-of-stock"}`}
+                disabled={product.stock <= 0}
+              >
+                {product.stock > 0 ? "In Stock" : "Out of Stock"}
+              </button>
               <div className="pd-action-container">
                 <div className="pd-quantity">
                   <button className="pd-qty-btn" onClick={decreaseQuantity} disabled={quantity <= 1}>
@@ -367,39 +351,45 @@ if (selectedOption && !selectedOption.isDefault) {
                     +
                   </button>
                 </div>
-
                 <div className="pd-button-group">
-                  <button className="pd-add-cart-btn" onClick={handleAddToCart}>
-                    Add to cart
-                  </button>
-                  <button className="pd-buy-now-btn" onClick={handleBuyNow}>
-                    Buy Now
-                  </button>
+                 <button
+  className="pd-add-cart-btn"
+  onClick={handleAddToCart}
+  disabled={product.stock <= 0}
+  style={product.stock <= 0 ? { cursor: "not-allowed", opacity: 0.5 } : {}}
+>
+  Add to cart
+</button>
+
+                  <button
+  className="pd-buy-now-btn"
+  onClick={handleBuyNow}
+  disabled={product.stock <= 0}
+  style={product.stock <= 0 ? { cursor: "not-allowed", opacity: 0.5 } : {}}
+>
+  Buy Now
+</button>
+
                 </div>
               </div>
-
               {isInCart() && (
                 <div className="pd-in-cart">
                   <span>✔ Already in cart ({getCartQuantity()} items)</span>
                 </div>
               )}
-
               <div className="pd-description">
                 <h3>Description</h3>
                 <p>{product.description}</p>
               </div>
-
               <div className="pd-details">
                 <div className="pd-detail-item">
                   <span className="pd-detail-label">Category:</span> {getSafe(product.category) || "N/A"}
                 </div>
               </div>
             </div>
-
             {/* Removed the pd-badges section entirely to eliminate confusion */}
           </div>
         </div>
-
         <div className="pd-similar-products-section">
           <h3>Similar Products</h3>
           <div className="pd-similar-products-grid">
