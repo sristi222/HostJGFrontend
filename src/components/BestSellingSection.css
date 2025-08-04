@@ -141,6 +141,7 @@
   height: 400px;
   scroll-snap-align: start;
   border: 1px solid rgba(255, 140, 66, 0.1);
+  cursor: pointer;
 }
 
 .bestsell-card-product-card:hover {
@@ -163,6 +164,7 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
+/* Fixed Image Container */
 .bestsell-card-image-container {
   position: relative;
   height: 180px;
@@ -171,30 +173,41 @@
   justify-content: center;
   overflow: hidden;
   background: linear-gradient(135deg, #f8f9fa, #ffffff);
+  padding: 10px;
+  z-index: 0; /* ✅ added */
 }
 
+
+/* Fixed Image Styling - No more cropping */
 .bestsell-card-product-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  width: auto;
+  height: auto;
+  position: relative;
+  z-index: 1; /* ✅ ensures it's below badge */
 }
+
 
 .bestsell-card-product-card:hover .bestsell-card-product-image {
-  transform: scale(1.08);
+  transform: scale(1.03); /* Reduced from 1.05 to avoid pushing over badge */
 }
+
 
 .bestsell-card-quantity-badge {
   position: absolute;
-  bottom: 0;
-  right: 0;
+  bottom: 8px; /* ✅ push slightly up from bottom */
+  right: 8px;  /* ✅ push slightly left from edge */
   color: white;
   font-size: 12px;
   font-weight: 600;
-  padding: 6px 12px;
+  padding: 6px 10px;
   border-radius: 6px 0 0 0;
   background: linear-gradient(135deg, rgba(96, 187, 70, 0.9), rgba(26, 48, 9, 0.9));
+  z-index: 2; /* ✅ ensure it's above image */
 }
+
 
 /* Info Block */
 .bestsell-card-product-info {
@@ -235,19 +248,14 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 8px; /* Adjusted margin for stock display */
 }
 
-.bestsell-card-current-price {
-  font-size: 18px;
-  font-weight: 700;
-  color: black;
-}
-
-.bestsell-card-original-price {
-  font-size: 14px;
-  color: #999;
-  text-decoration: line-through;
+/* NEW: Stock Status for Best Selling */
+.bestsell-card-product-stock {
+  font-size: 13px;
+  margin-bottom: 16px; /* Adjusted margin to separate from buttons */
+  font-weight: 500;
 }
 
 /* Buttons */
@@ -268,7 +276,7 @@
   border-radius: 6px;
   padding: 12px 0;
   font-size: 12px;
-  font-weight: 400; /* Changed from 600 to 400 */
+  font-weight: 400;
   cursor: pointer;
   transition: all 0.3s ease;
   text-transform: uppercase;
@@ -306,14 +314,18 @@
     width: 36px;
     height: 36px;
   }
+
   .bestsell-card-product-card {
     flex: 0 0 260px;
     width: 260px;
-    height: auto;
+    height: auto; /* Changed to auto to accommodate new stock line */
   }
+
   .bestsell-card-image-container {
     height: 160px;
+    padding: 8px;
   }
+
   .bestsell-prod-title {
     font-size: 20px;
     max-width: 70%;
@@ -325,35 +337,96 @@
     width: 32px;
     height: 32px;
   }
+
   .bestsell-card-product-card {
     flex: 0 0 220px;
     width: 220px;
-    height: auto;
+    height: auto; /* Changed to auto to accommodate new stock line */
   }
+
+  .bestsell-card-image-container {
+    height: 140px;
+    padding: 6px;
+  }
+
   .bestsell-card-product-info {
     padding: 14px;
   }
+
   .bestsell-card-product-name {
     font-size: 14px;
   }
+
   .bestsell-card-current-price {
     font-size: 16px;
   }
+
   .bestsell-card-original-price {
     font-size: 12px;
   }
+
   .bestsell-card-button-group {
     gap: 6px;
   }
+
   .bestsell-card-add-to-cart-btn,
   .bestsell-card-buy-now-btn {
     font-size: 10px;
     padding: 8px 0;
   }
+
   .bestsell-card-product-price {
     margin-bottom: 10px;
   }
+
   .bestsell-card-product-actions {
     margin-top: 6px;
   }
+}
+
+/* Additional styles for better image handling */
+@media (max-width: 360px) {
+  .bestsell-card-product-card {
+    flex: 0 0 200px;
+    width: 200px;
+  }
+
+  .bestsell-card-image-container {
+    height: 120px;
+    padding: 5px;
+  }
+}
+
+/* Loading state for images */
+.bestsell-card-product-image[src="/placeholder.svg"] {
+  opacity: 0.7;
+  background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+}
+
+/* Ensure images don't break layout */
+.bestsell-card-image-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(248, 249, 250, 0.5), rgba(255, 255, 255, 0.5));
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bestsell-card-product-image {
+  position: relative;
+  z-index: 1;
+}
+
+.bestsell-card-product-stock .in-stock-text {
+  color: #60bb46; /* Green for in stock */
+  font-weight: 700;
+}
+
+.bestsell-card-product-stock .out-of-stock-text {
+  color: #ff4d4d; /* Red for out of stock */
+  font-weight: 700;
 }
