@@ -1,210 +1,226 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useParams, useNavigate } from "react-router-dom"
-import "./ProductForm.css"
+import axios from "axios"
+import { useParams, useNavigate } from "react-router-dom" // Add useNavigate
 
-function EditProduct() {
-  const { id } = useParams()
-  const navigate = useNavigate()
-  const [loading, setLoading] = useState(true)
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [categories, setCategories] = useState([])
-  const [calculatedDiscount, setCalculatedDiscount] = useState(null)
+const EditProduct = () => {
+  const { id: productId } = useParams()
+  const navigate = useNavigate() // Initialize useNavigate
+
+  const unitOptions = [
+    { value: "kg", label: "Kg" },
+    { value: "g", label: "G" },
+    { value: "l", label: "L" },
+    { value: "ml", label: "Ml" },
+    { value: "pcs", label: "Pcs" },
+    { value: "pack", label: "Pack" },
+  ]
+
   const [formData, setFormData] = useState({
     name: "",
     description: "",
     category: "",
     subcategory: "",
     price: "",
-    // Default quantity (shown on cards)
-    unit: "kg",
-    defaultQuantity: "1",
-    // Custom quantity options (shown on detail page)
-    customQuantityOptions: [],
-    image: null,
-    imagePreview: null,
+    unit: "kg", // Default unit
+    defaultQuantity: "1", // Default quantity for cards
+    customQuantityOptions: [], // Custom quantity options
+    stock: 1, // Default to 1 (in stock) for the boolean toggle
+    imageUrl: null, // Existing image URL from backend
+    image: null, // New image file to upload
+    imagePreview: null, // Preview URL for new image
     displayInLatest: false,
     displayInBestSelling: false,
     onSale: false,
     salePrice: "",
   })
 
-  const unitOptions = [
-    { value: "kg", label: "Kilogram (kg)" },
-    { value: "g", label: "Gram (g)" },
-    { value: "pcs", label: "Pieces (pcs)" },
-    { value: "dozen", label: "Dozen" },
-    { value: "pack", label: "Pack" },
-    { value: "box", label: "Box" },
-    { value: "bottle", label: "Bottle" },
-    { value: "liter", label: "Liter (L)" },
-    { value: "ml", label: "Milliliter (ml)" },
-    { value: "bunch", label: "Bunch" },
-  ]
+  const [categories, setCategories] = useState([])
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [calculatedDiscount, setCalculatedDiscount] = useState("")
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
-  // ✅ Fetch categories
+  // Fetch categories on component mount
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch("https://jgenterprisebackend.onrender.com/api/categories")
-        const data = await res.json()
-        setCategories(Array.isArray(data) ? data : data.categories || [])
-      } catch (err) {
-        console.error("Error loading categories", err)
+        const res = await axios.get("http://localhost:5000/api/categories")
+        if (res.status === 200) {
+          setCategories(res.data)
+        } else {
+          console.error("Failed to fetch categories")
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error)
       }
     }
     fetchCategories()
   }, [])
 
-  // ✅ Fetch product details
+  // Fetch product details when productId changes
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchProductDetails = async () => {
+      if (!productId) {
+        setError("Product ID is missing.")
+        setLoading(false)
+        return
+      }
       try {
-        const res = await fetch(`https://jgenterprisebackend.onrender.com/api/products/${id}`)
-        const data = await res.json()
-        if (res.ok) {
-          // Set default quantity if not present
-          if (!data.defaultQuantity) {
-            data.defaultQuantity = "1"
-          }
-
-          // Ensure customQuantityOptions is an array
-          if (!data.customQuantityOptions || !Array.isArray(data.customQuantityOptions)) {
-            data.customQuantityOptions = []
-          }
-
-          setFormData({
-            ...data,
-            category: typeof data.category === "object" ? data.category._id : data.category,
-            subcategory: typeof data.subcategory === "object" ? data.subcategory._id : data.subcategory,
-            image: null,
-            imagePreview: data.imageUrl || data.image || null,
-          })
-
-          console.log("📦 Loaded product data:", {
-            name: data.name,
-            defaultQuantity: data.defaultQuantity,
-            unit: data.unit,
-            customQuantityOptions: data.customQuantityOptions,
-          })
-        } else {
-          alert("Failed to fetch product")
-          navigate("/admin/products")
+        const response = await axios.get(`http://localhost:5000/api/products/${productId}`)
+        const data = response.data
+        setFormData({
+          name: data.name || "",
+          description: data.description || "",
+          category: typeof data.category === "object" ? data.category._id : data.category || "",
+          subcategory: data.subcategory || "",
+          price: data.price || "",
+          unit: data.unit || "kg",
+          defaultQuantity: data.defaultQuantity || "1",
+          customQuantityOptions: data.customQuantityOptions || [],
+          stock: data.stock > 0 ? 1 : 0, // Convert numerical stock to binary (1 for in stock, 0 for out of stock)
+          imageUrl: data.imageUrl || null, // Store original image URL
+          image: null, // No new image selected initially
+          imagePreview: data.imageUrl || "/placeholder.svg", // Use existing image for preview
+          displayInLatest: data.displayInLatest || false,
+          displayInBestSelling: data.displayInBestSelling || false,
+          onSale: data.onSale || false,
+          salePrice: data.salePrice || "",
+        })
+        if (data.onSale && data.price && data.salePrice) {
+          calculateDiscount(data.price, data.salePrice)
         }
+        setLoading(false)
       } catch (err) {
-        console.error("Error loading product:", err)
-        alert("Server error")
-        navigate("/admin/products")
-      } finally {
+        console.error("Error fetching product details:", err)
+        setError("Failed to load product details. Please check the product ID.")
         setLoading(false)
       }
     }
 
-    fetchProduct()
-  }, [id, navigate])
-
-  // Calculate discount percentage when price or sale price changes
-  useEffect(() => {
-    if (formData.onSale && formData.price && formData.salePrice) {
-      const originalPrice = Number.parseFloat(formData.price)
-      const discountedPrice = Number.parseFloat(formData.salePrice)
-
-      if (originalPrice > 0 && discountedPrice > 0 && discountedPrice < originalPrice) {
-        const discount = ((originalPrice - discountedPrice) / originalPrice) * 100
-        setCalculatedDiscount(Math.round(discount))
-      } else {
-        setCalculatedDiscount(null)
-      }
-    } else {
-      setCalculatedDiscount(null)
-    }
-  }, [formData.price, formData.salePrice, formData.onSale])
+    fetchProductDetails()
+  }, [productId])
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }))
-  }
+    setFormData((prevFormData) => {
+      const newFormData = {
+        ...prevFormData,
+        [name]: type === "checkbox" ? (checked ? 1 : 0) : value, // Convert boolean to 1 or 0 for stock
+      }
 
-  const handleDiscountChange = (e) => {
-    const discountPercent = Number.parseFloat(e.target.value)
-    if (!isNaN(discountPercent) && formData.price) {
-      const originalPrice = Number.parseFloat(formData.price)
-      const calculatedSalePrice = originalPrice - originalPrice * (discountPercent / 100)
-
-      setFormData((prev) => ({
-        ...prev,
-        salePrice: calculatedSalePrice.toFixed(2),
-      }))
-    }
+      // Recalculate discount if price or salePrice changes and onSale is true
+      if (name === "price" && newFormData.onSale) {
+        calculateDiscount(value, newFormData.salePrice)
+      } else if (name === "salePrice" && newFormData.onSale) {
+        calculateDiscount(newFormData.price, value)
+      } else if (name === "onSale") {
+        // If onSale is toggled, reset discount or calculate if enabled
+        if (checked) {
+          calculateDiscount(newFormData.price, newFormData.salePrice)
+        } else {
+          setCalculatedDiscount("")
+        }
+      }
+      return newFormData
+    })
   }
 
   const handleImageChange = (e) => {
     const file = e.target.files[0]
     if (file) {
-      setFormData((prev) => ({
-        ...prev,
+      setFormData((prevFormData) => ({
+        ...prevFormData,
         image: file,
         imagePreview: URL.createObjectURL(file),
       }))
     }
   }
 
-  // Handle custom quantity options
   const addCustomQuantityOption = () => {
-    setFormData((prev) => ({
-      ...prev,
-      customQuantityOptions: [...prev.customQuantityOptions, { amount: "", unit: prev.unit, price: "" }],
-    }))
-  }
-
-  const removeCustomQuantityOption = (index) => {
-    setFormData((prev) => ({
-      ...prev,
-      customQuantityOptions: prev.customQuantityOptions.filter((_, i) => i !== index),
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      customQuantityOptions: [...prevFormData.customQuantityOptions, { amount: "", unit: "", price: "" }],
     }))
   }
 
   const updateCustomQuantityOption = (index, field, value) => {
-    setFormData((prev) => {
-      const newOptions = [...prev.customQuantityOptions]
-      newOptions[index][field] = value
-      return {
-        ...prev,
-        customQuantityOptions: newOptions,
-      }
-    })
+    const updatedOptions = [...formData.customQuantityOptions]
+    updatedOptions[index][field] = value
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      customQuantityOptions: updatedOptions,
+    }))
   }
 
-  // Validate custom quantity options - only validate if they exist
+  const removeCustomQuantityOption = (index) => {
+    const updatedOptions = [...formData.customQuantityOptions]
+    updatedOptions.splice(index, 1)
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      customQuantityOptions: updatedOptions,
+    }))
+  }
+
   const validateCustomQuantityOptions = () => {
-    if (formData.customQuantityOptions.length === 0) {
-      return true // No custom options is valid
+    for (const option of formData.customQuantityOptions) {
+      // An option is considered "filled" if all its fields (amount, unit, price) have values
+      const isFilled = option.amount && option.unit && option.price
+      // An option is considered "partially filled" if some but not all fields have values
+      const isPartiallyFilled = (option.amount || option.unit || option.price) && !isFilled
+
+      if (isPartiallyFilled) {
+        return false // Return false if any option is partially filled
+      }
     }
-
-    // If there are custom options, validate only the filled ones
-    return formData.customQuantityOptions.every((option) => {
-      // If any field is filled, all fields must be filled
-      const hasAnyValue = option.amount || option.unit || option.price
-      if (!hasAnyValue) return true // Empty option is valid
-
-      // If option has values, all required fields must be filled
-      return option.amount && option.unit && option.price
-    })
+    return true // All options are either fully filled or completely empty
   }
+
+  const calculateDiscount = (price, salePrice) => {
+    const p = Number.parseFloat(price)
+    const sp = Number.parseFloat(salePrice)
+    if (p > 0 && sp >= 0 && sp < p) {
+      const discount = ((p - sp) / p) * 100
+      setCalculatedDiscount(discount.toFixed(0))
+    } else {
+      setCalculatedDiscount("")
+    }
+  }
+
+  const handleDiscountChange = (e) => {
+    const discount = e.target.value
+    setCalculatedDiscount(discount)
+    if (formData.price && discount) {
+      const salePrice = formData.price - (formData.price * Number.parseFloat(discount)) / 100
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        salePrice: salePrice.toFixed(2),
+      }))
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        salePrice: "",
+      }))
+    }
+  }
+
+  useEffect(() => {
+    if (formData.price && calculatedDiscount) {
+      const salePrice = formData.price - (formData.price * Number.parseFloat(calculatedDiscount)) / 100
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        salePrice: salePrice.toFixed(2),
+      }))
+    }
+  }, [formData.price, calculatedDiscount])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-
-    // Validate custom quantity options
     if (!validateCustomQuantityOptions()) {
       alert("Please fill all fields for custom quantity options or remove empty options.")
       return
     }
-
     setIsSubmitting(true)
     const formDataToSend = new FormData()
 
@@ -213,49 +229,60 @@ function EditProduct() {
       return option.amount && option.unit && option.price
     })
 
-    // Create a copy of formData with filtered options
-    const dataToSend = { ...formData, customQuantityOptions: validCustomOptions }
-
-    // Add all fields to FormData except image and imagePreview
-    for (const [key, value] of Object.entries(dataToSend)) {
-      if (key === "image" && value) {
-        formDataToSend.append("image", value)
-      } else if (key === "customQuantityOptions") {
-        formDataToSend.append(key, JSON.stringify(value))
-      } else if (key !== "imagePreview") {
+    // Append all form data fields
+    Object.entries(formData).forEach(([key, value]) => {
+      if (key === "image" || key === "imagePreview" || key === "imageUrl") {
+        // Skip image related fields that are not the file itself
+        return
+      }
+      if (key === "customQuantityOptions") {
+        formDataToSend.append(key, JSON.stringify(validCustomOptions))
+      } else if (key === "stock") {
+        // Ensure stock is sent as a number (0 or 1)
+        formDataToSend.append(key, String(value))
+      } else {
         formDataToSend.append(key, value)
       }
+    })
+
+    // Append the new image file if selected
+    if (formData.image) {
+      formDataToSend.append("image", formData.image)
     }
 
     try {
-      const res = await fetch(`https://jgenterprisebackend.onrender.com/api/products/${id}`, {
-        method: "PUT",
-        body: formDataToSend,
+      const res = await axios.put(`http://localhost:5000/api/products/${productId}`, formDataToSend, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       })
-      const data = await res.json()
-      if (res.ok) {
-        alert("✅ Product updated successfully")
+      if (res.status === 200) {
+        console.log("✅ Product updated:", res.data)
         navigate("/admin/products")
       } else {
-        alert(data.error || "Failed to update product")
+        const err = res.data
+        console.error("❌ Failed to update product:", err)
+        alert("Error: " + (err.error || "Failed to update product."))
       }
-    } catch (err) {
-      console.error("Update error:", err)
-      alert("Server error while updating product")
+    } catch (error) {
+      console.error("❌ Error submitting form:", error)
+      alert("Something went wrong. Please try again.")
     } finally {
       setIsSubmitting(false)
     }
   }
 
+  const getSubcategoriesForCategory = (categoryId) => {
+    const selectedCategory = categories.find((cat) => cat._id === categoryId)
+    return selectedCategory ? selectedCategory.subcategories : []
+  }
+
   if (loading) {
-    return (
-      <div className="product-form-container">
-        <div className="loading-container">
-          <div className="loading-spinner"></div>
-          <p>Loading product details...</p>
-        </div>
-      </div>
-    )
+    return <div className="product-form-container">Loading product...</div>
+  }
+
+  if (error) {
+    return <div className="product-form-container error-message">{error}</div>
   }
 
   return (
@@ -266,7 +293,6 @@ function EditProduct() {
           Back to Products
         </button>
       </div>
-
       <form onSubmit={handleSubmit} className="product-form">
         <div className="form-grid">
           <div className="form-left">
@@ -274,7 +300,6 @@ function EditProduct() {
               <label htmlFor="name">Product Name*</label>
               <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />
             </div>
-
             <div className="form-group">
               <label htmlFor="description">Description</label>
               <textarea
@@ -285,7 +310,6 @@ function EditProduct() {
                 rows={4}
               />
             </div>
-
             <div className="form-row">
               <div className="form-group">
                 <label htmlFor="category">Category*</label>
@@ -298,7 +322,6 @@ function EditProduct() {
                   ))}
                 </select>
               </div>
-
               <div className="form-group">
                 <label htmlFor="subcategory">Subcategory*</label>
                 <select
@@ -308,26 +331,34 @@ function EditProduct() {
                   onChange={handleChange}
                   disabled={!formData.category}
                 >
-                  <option value="">Select Subcategory</option>
-                  {formData.category &&
-                    categories
-                      .find((cat) => cat._id === formData.category)
-                      ?.subcategories?.map((subcat) => (
-                        <option key={subcat._id} value={subcat._id}>
-                          {subcat.name}
-                        </option>
-                      ))}
+                  <option value="">Select Subcategory (optional)</option>
+                  {getSubcategoriesForCategory(formData.category).map((subcat) => (
+                    <option key={subcat._id} value={subcat._id}>
+                      {subcat.name}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
-
             <div className="form-row">
               <div className="form-group">
                 <label htmlFor="price">Price*</label>
                 <input type="number" id="price" name="price" value={formData.price} onChange={handleChange} required />
               </div>
+              {/* Updated: Stock Checkbox */}
+              <div className="form-group checkbox-group">
+                <label htmlFor="stock" className="checkbox-label">
+                  <input
+                    type="checkbox"
+                    id="stock"
+                    name="stock"
+                    checked={formData.stock > 0} // Check if stock is greater than 0
+                    onChange={handleChange}
+                  />
+                  <span>In Stock</span>
+                </label>
+              </div>
             </div>
-
             {/* Default Quantity Section (shown on cards) */}
             <div className="quantity-section">
               <h3 className="section-title">Default Display (Product Cards)</h3>
@@ -344,7 +375,6 @@ function EditProduct() {
                     required
                   />
                 </div>
-
                 <div className="form-group">
                   <label htmlFor="unit">Default Unit*</label>
                   <select id="unit" name="unit" value={formData.unit} onChange={handleChange} required>
@@ -360,7 +390,6 @@ function EditProduct() {
                 This will be displayed on product cards as "{formData.defaultQuantity} {formData.unit}"
               </p>
             </div>
-
             {/* Custom Quantity Options Section (shown on detail page) - NOW OPTIONAL */}
             <div className="quantity-section">
               <div className="section-header">
@@ -369,7 +398,6 @@ function EditProduct() {
                   + Add Option
                 </button>
               </div>
-
               {formData.customQuantityOptions.length === 0 ? (
                 <div className="no-options-message">
                   <p>
@@ -391,7 +419,6 @@ function EditProduct() {
                           placeholder="e.g., 500, 1, 2.5"
                         />
                       </div>
-
                       <div className="form-group">
                         <label>Unit</label>
                         <input
@@ -401,7 +428,6 @@ function EditProduct() {
                           placeholder="e.g., kg, ml, pcs"
                         />
                       </div>
-
                       <div className="form-group">
                         <label>Price</label>
                         <input
@@ -412,7 +438,6 @@ function EditProduct() {
                           placeholder="Price for this option"
                         />
                       </div>
-
                       <button
                         type="button"
                         className="remove-option-btn"
@@ -424,14 +449,12 @@ function EditProduct() {
                   ))}
                 </div>
               )}
-
               <p className="helper-text">
                 {formData.customQuantityOptions.length === 0
                   ? "Add custom quantity options if you want to offer different package sizes with different prices."
                   : "Users will be able to choose from these quantity options on the product detail page. Leave empty to remove an option."}
               </p>
             </div>
-
             <div className="form-group checkboxes">
               <label htmlFor="displayInLatest" className="checkbox-label">
                 <input
@@ -458,7 +481,6 @@ function EditProduct() {
                 <span>On Sale</span>
               </label>
             </div>
-
             {formData.onSale && (
               <div className="sale-section">
                 <div className="form-row">
@@ -495,23 +517,21 @@ function EditProduct() {
                     </div>
                   </div>
                 </div>
-
                 {calculatedDiscount && (
                   <div className="discount-preview">
                     <div className="discount-badge">
                       <span className="discount-value">{calculatedDiscount}% OFF</span>
                     </div>
                     <div className="price-comparison">
-                      <span className="original-price">₹{formData.price}</span>
+                      <span className="original-price">NRs.{formData.price}</span>
                       <span className="arrow">→</span>
-                      <span className="sale-price">₹{formData.salePrice}</span>
+                      <span className="sale-price">NRs.{formData.salePrice}</span>
                     </div>
                   </div>
                 )}
               </div>
             )}
           </div>
-
           <div className="form-right">
             <div className="form-group">
               <label htmlFor="image">Product Image</label>
@@ -525,15 +545,11 @@ function EditProduct() {
                     </div>
                   )}
                   {formData.imagePreview && (
-                    <div className="image-preview-container">
-                      <img src={formData.imagePreview || "/placeholder.svg"} alt="Preview" className="image-preview" />
-                      {formData.onSale && <div className="sale-overlay">SALE</div>}
-                    </div>
+                    <img src={formData.imagePreview || "/placeholder.svg"} alt="Preview" className="image-preview" />
                   )}
                 </div>
               </div>
             </div>
-
             {/* Preview Section */}
             <div className="preview-section">
               <h4>Preview</h4>
@@ -543,8 +559,9 @@ function EditProduct() {
                 </div>
                 <div className="preview-title">{formData.name || "Product Name"}</div>
                 <div className="preview-price">NRs. {formData.price || "0"}</div>
+                {/* Display stock in preview as In Stock/Out of Stock */}
+                <div className="preview-stock">Stock: {formData.stock > 0 ? "In Stock" : "Out of Stock"}</div>
               </div>
-
               {formData.customQuantityOptions.length > 0 && (
                 <div className="preview-options">
                   <h5>Available Options:</h5>
@@ -562,7 +579,6 @@ function EditProduct() {
             </div>
           </div>
         </div>
-
         <div className="form-actions">
           <button type="button" className="cancel-btn" onClick={() => navigate("/admin/products")}>
             Cancel
