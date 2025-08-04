@@ -10,7 +10,7 @@ function Products() {
   const [searchTerm, setSearchTerm] = useState("")
   const [categoryFilter, setCategoryFilter] = useState("")
   const [categories, setCategories] = useState([])
-  const [viewMode, setViewMode] = useState("table") // table or cards
+  const [viewMode, setViewMode] = useState("table") // table or cardss
   const navigate = useNavigate()
 
   useEffect(() => {
