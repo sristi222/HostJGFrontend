@@ -16,7 +16,7 @@ function Products() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("/api/products")
+        const res = await fetch("https://jgenterprisebackend.onrender.com/api/products")
         const data = await res.json()
         if (data.success) {
           setProducts(data.products)
@@ -32,7 +32,7 @@ function Products() {
 
     const fetchCategories = async () => {
       try {
-        const res = await fetch("/api/categories")
+        const res = await fetch("https://jgenterprisebackend.onrender.com/api/categories")
         const data = await res.json()
         if (Array.isArray(data)) {
           setCategories(["All Categories", ...data.map((cat) => ({ id: cat._id, name: cat.name }))])
@@ -49,7 +49,7 @@ function Products() {
   const handleDeleteProduct = async (id) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
-        const res = await fetch(`/api/products/${id}`, { method: "DELETE" })
+        const res = await fetch(`https://jgenterprisebackend.onrender.com/api/products/${id}`, { method: "DELETE" })
         const result = await res.json()
         if (result.success) {
           setProducts(products.filter((product) => product._id !== id))
