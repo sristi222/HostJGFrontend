@@ -139,9 +139,10 @@
   overflow: hidden;
   flex: 0 0 280px;
   width: 280px;
-  height: 400px;
+  height: 400px; /* Adjusted height to accommodate new stock line */
   scroll-snap-align: start;
   border: 1px solid rgba(255, 140, 66, 0.1);
+  cursor: pointer;
 }
 
 .latest-card:hover {
@@ -164,37 +165,45 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
+/* Fixed Image Container - No more cropping */
 .latest-image-container {
   position: relative;
-  height: 180px;
+  height: 180px; /* Keep fixed height for consistent card layout */
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   background: linear-gradient(135deg, #f8f9fa, #ffffff);
+  padding: 10px; /* Added padding for better spacing around the image */
 }
 
+/* Fixed Image Styling - No more cropping */
 .latest-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain; /* Changed from 'cover' to 'contain' */
+  transition: transform 0.3s ease; /* Reduced transition for smoother hover */
+  border-radius: 6px;
 }
 
 .latest-card:hover .latest-image {
-  transform: scale(1.08);
+  transform: scale(1.05); /* Reduced scale to prevent overflow */
 }
 
 .latest-quantity-badge {
   position: absolute;
-  bottom: 0;
-  right: 0;
+  bottom: 8px;  /* ✅ Pull up slightly from the edge */
+  right: 8px;   /* ✅ Pull inward slightly */
   color: white;
   font-size: 12px;
   font-weight: 600;
   padding: 6px 12px;
   border-radius: 6px 0 0 0;
   background: linear-gradient(135deg, rgba(96, 187, 70, 0.9), rgba(26, 48, 9, 0.9));
+  z-index: 2;
+   
 }
 
 /* Info Block */
@@ -236,19 +245,14 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 8px; /* Adjusted margin for stock display */
 }
 
-.latest-current-price {
-  font-size: 18px;
-  font-weight: 700;
-  color: black;
-}
-
-.latest-original-price {
-  font-size: 14px;
-  color: #999;
-  text-decoration: line-through;
+/* NEW: Stock Status for Latest Products */
+.latest-product-stock {
+  font-size: 13px;
+  margin-bottom: 16px; /* Adjusted margin to separate from buttons */
+  font-weight: 500;
 }
 
 /* Buttons */
@@ -269,7 +273,7 @@
   border-radius: 6px;
   padding: 12px 0;
   font-size: 12px;
-  font-weight: 400; /* Changed from 600 to 400 */
+  font-weight: 400;
   cursor: pointer;
   transition: all 0.3s ease;
   text-transform: uppercase;
@@ -307,14 +311,18 @@
     width: 36px;
     height: 36px;
   }
+
   .latest-card {
     flex: 0 0 260px;
     width: 260px;
-    height: 380px;
+    height: auto; /* Changed to auto to accommodate new stock line */
   }
+
   .latest-image-container {
-    height: 180px;
+    height: 160px;
+    padding: 8px; /* Adjusted padding for smaller screens */
   }
+
   .latest-title {
     font-size: 20px;
     max-width: 70%;
@@ -326,38 +334,96 @@
     width: 32px;
     height: 32px;
   }
+
   .latest-card {
     flex: 0 0 220px;
     width: 220px;
-    height: auto;
+    height: auto; /* Changed to auto to accommodate new stock line */
   }
+
   .latest-image-container {
-    height: 160px;
+    height: 140px;
+    padding: 6px; /* Adjusted padding for smaller screens */
   }
+
   .latest-info {
     padding: 14px;
   }
+
   .latest-name {
     font-size: 14px;
   }
+
   .latest-current-price {
     font-size: 16px;
   }
+
   .latest-original-price {
     font-size: 12px;
   }
+
   .latest-buttons {
     gap: 6px;
   }
+
   .latest-cart-btn,
   .latest-buy-btn {
     font-size: 10px;
     padding: 8px 0;
   }
+
   .latest-price {
     margin-bottom: 10px;
   }
+
   .latest-actions {
     margin-top: 6px;
   }
+}
+
+/* Additional styles for better image handling */
+@media (max-width: 360px) {
+  .latest-card {
+    flex: 0 0 200px;
+    width: 200px;
+  }
+
+  .latest-image-container {
+    height: 120px;
+    padding: 5px; /* Adjusted padding for very small screens */
+  }
+}
+
+/* Loading state for images */
+.latest-image[src="/placeholder.svg"] {
+  opacity: 0.7;
+  background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+}
+
+/* Ensure images don't break layout */
+.latest-image-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(248, 249, 250, 0.5), rgba(255, 255, 255, 0.5));
+  pointer-events: none;
+  z-index: 0;
+}
+
+.latest-image {
+  position: relative;
+  z-index: 1;
+}
+
+.latest-product-stock .in-stock-text {
+  color: #60bb46; /* Green for in stock */
+  font-weight: 700;
+}
+
+.latest-product-stock .out-of-stock-text {
+  color: #ff4d4d; /* Red for out of stock */
+  font-weight: 700;
 }
