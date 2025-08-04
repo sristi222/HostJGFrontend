@@ -15,7 +15,7 @@ function BestSellingSection() {
   useEffect(() => {
     const fetchBestSellingProducts = async () => {
       try {
-        const res = await axios.get("https://jgenterprisebackend.onrender.com/api/products/bestselling")
+        const res = await axios.get("http://localhost:5000/api/products/bestselling")
         if (res.data.success) {
           setBestSellers(res.data.products)
           if (res.data.products.length > 0) {
@@ -31,11 +31,12 @@ function BestSellingSection() {
 
   const handleAddToCart = (product, e) => {
     e.stopPropagation()
-
     // ✅ Normalized quantity option for cart key consistency
     const selectedQuantityOption = {
       amount: String(product.defaultQuantity || "1").trim(),
-      unit: String(product.unit || "kg").trim().toLowerCase(),
+      unit: String(product.unit || "kg")
+        .trim()
+        .toLowerCase(),
       price: Number(product.price),
     }
 
@@ -65,7 +66,7 @@ function BestSellingSection() {
   const getImageUrl = (product) => {
     const raw = product.imageUrl || product.image || ""
     if (raw.startsWith("http")) return raw
-    if (raw.trim() !== "") return `https://jgenterprisebackend.onrender.com/uploads/${raw.replace(/^.*[\\/]/, "")}`
+    if (raw.trim() !== "") return `http://localhost:5000/uploads/${raw.replace(/^.*[\\/]/, "")}`
     return "/placeholder.svg"
   }
 
@@ -159,20 +160,36 @@ function BestSellingSection() {
                     <div className="bestsell-card-product-category">
                       {typeof product.category === "object" ? product.category.name : product.category}
                     </div>
-
                     <div className="bestsell-card-product-price">
                       <span className="bestsell-card-current-price">NRs.{currentPrice}</span>
                       {originalPrice && <span className="bestsell-card-original-price">NRs.{originalPrice}</span>}
                     </div>
-
+                    {/* NEW: Stock Status */}
+                    <div className="bestsell-card-product-stock">
+                      <span className={product.stock > 0 ? "in-stock-text" : "out-of-stock-text"}>
+                        {product.stock > 0 ? "In Stock" : "Out of Stock"}
+                      </span>
+                    </div>
                     <div className="bestsell-card-product-actions">
                       <div className="bestsell-card-button-group">
-                        <button className="bestsell-card-add-to-cart-btn" onClick={(e) => handleAddToCart(product, e)}>
-                          ADD TO CART
-                        </button>
-                        <button className="bestsell-card-buy-now-btn" onClick={(e) => handleBuyNow(product._id, e)}>
-                          BUY NOW
-                        </button>
+                        <button
+  className="bestsell-card-add-to-cart-btn"
+  onClick={(e) => handleAddToCart(product, e)}
+  disabled={product.stock <= 0}
+  style={product.stock <= 0 ? { cursor: "not-allowed", opacity: 0.5 } : {}}
+>
+  ADD TO CART
+</button>
+
+                        <button
+  className="bestsell-card-buy-now-btn"
+  onClick={(e) => handleBuyNow(product._id, e)}
+  disabled={product.stock <= 0}
+  style={product.stock <= 0 ? { cursor: "not-allowed", opacity: 0.5 } : {}}
+>
+  BUY NOW
+</button>
+
                       </div>
                     </div>
                   </div>
