@@ -38,7 +38,7 @@ function ProductCard({ product }) {
   const getImageUrl = (product) => {
     const raw = product.imageUrl || product.image || ""
     if (raw.startsWith("http")) return raw
-    if (raw.trim() !== "") return `http://localhost:5000/uploads/${raw.replace(/^.*[\\/]/, "")}`
+    if (raw.trim() !== "") return `https://jgenterprisebackend.onrender.com/uploads/${raw.replace(/^.*[\\/]/, "")}`
     return "/placeholder.svg"
   }
 
