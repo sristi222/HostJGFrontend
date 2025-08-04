@@ -14,7 +14,7 @@ function ProductSection() {
   useEffect(() => {
     const fetchLatestProducts = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/products/latest")
+        const res = await axios.get("https://jgenterprisebackend.onrender.com/api/products/latest")
         if (res.data.success) {
           setProducts(res.data.products)
         }
@@ -56,7 +56,7 @@ function ProductSection() {
   const getImageUrl = (product) => {
     const raw = product.imageUrl || product.image || ""
     if (raw.startsWith("http")) return raw
-    if (raw.trim() !== "") return `http://localhost:5000/uploads/${raw.replace(/^.*[\\/]/, "")}`
+    if (raw.trim() !== "") return `hhttps://jgenterprisebackend.onrender.com/uploads/${raw.replace(/^.*[\\/]/, "")}`
     return "/placeholder.svg"
   }
 
