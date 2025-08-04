@@ -1,10 +1,9 @@
 "use client"
-
 import { useState, useEffect, useRef } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useCart } from "../context/CartContext"
 import axios from "axios"
-import "./ProductSection.css"
+import "./ProductSection.css" 
 
 function ProductSection() {
   const { addToCart } = useCart()
@@ -15,7 +14,7 @@ function ProductSection() {
   useEffect(() => {
     const fetchLatestProducts = async () => {
       try {
-        const res = await axios.get("https://jgenterprisebackend.onrender.com/api/products/latest")
+        const res = await axios.get("http://localhost:5000/api/products/latest")
         if (res.data.success) {
           setProducts(res.data.products)
         }
@@ -28,7 +27,21 @@ function ProductSection() {
 
   const handleAddToCart = (product, e) => {
     e.stopPropagation()
-    addToCart({ ...product, quantity: 1 })
+    // ✅ Normalized quantity option for cart key consistency
+    const selectedQuantityOption = {
+      amount: String(product.defaultQuantity || "1").trim(),
+      unit: String(product.unit || "kg")
+        .trim()
+        .toLowerCase(),
+      price: Number(product.price),
+    }
+
+    const cartProduct = {
+      ...product,
+      quantity: 1,
+      selectedQuantityOption,
+    }
+    addToCart(cartProduct)
   }
 
   const handleBuyNow = (productId, e) => {
@@ -43,7 +56,7 @@ function ProductSection() {
   const getImageUrl = (product) => {
     const raw = product.imageUrl || product.image || ""
     if (raw.startsWith("http")) return raw
-    if (raw.trim() !== "") return `https://jgenterprisebackend.onrender.com/uploads/${raw.replace(/^.*[\\/]/, "")}`
+    if (raw.trim() !== "") return `http://localhost:5000/uploads/${raw.replace(/^.*[\\/]/, "")}`
     return "/placeholder.svg"
   }
 
@@ -86,26 +99,34 @@ function ProductSection() {
       <div className="latest-container">
         <div className="latest-header">
           <h2 className="latest-title">LATEST PRODUCTS</h2>
-          <Link to="/products" className="latest-view-all">VIEW ALL</Link>
+          <Link to="/products" className="latest-view-all">
+            VIEW ALL
+          </Link>
         </div>
-
         <div className="latest-carousel-container">
           <button className="latest-carousel-arrow latest-carousel-prev" onClick={scrollLeft}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <polyline points="15 18 9 12 15 6" />
             </svg>
           </button>
-
           <div className="latest-grid" ref={scrollContainerRef}>
             {products.map((product) => {
               const { currentPrice, originalPrice } = getPriceDisplay(product)
               return (
                 <div className="latest-card" key={product._id} onClick={() => navigateToProduct(product._id)}>
                   {product.onSale && <div className="latest-sale-tag">SALE</div>}
-
                   <div className="latest-image-container">
                     <img
-                      src={getImageUrl(product)}
+                      src={getImageUrl(product) || "/placeholder.svg"}
                       alt={product.name}
                       className="latest-image"
                       width="200"
@@ -120,32 +141,57 @@ function ProductSection() {
                       {getQuantityBadgeContent(product)}
                     </div>
                   </div>
-
                   <div className="latest-info">
                     <h3 className="latest-name">{product.name}</h3>
                     <div className="latest-category">
                       {typeof product.category === "object" ? product.category.name : product.category}
                     </div>
-
                     <div className="latest-price">
                       <span className="latest-current-price">NRs.{currentPrice}</span>
                       {originalPrice && <span className="latest-original-price">NRs.{originalPrice}</span>}
                     </div>
-
-                    <div className="latest-actions">
-                      <div className="latest-buttons">
-                        <button className="latest-cart-btn" onClick={(e) => handleAddToCart(product, e)}>ADD TO CART</button>
-                        <button className="latest-buy-btn" onClick={(e) => handleBuyNow(product._id, e)}>BUY NOW</button>
-                      </div>
+                    {/* NEW: Stock Status */}
+                    <div className="latest-product-stock">
+                      <span className={product.stock > 0 ? "in-stock-text" : "out-of-stock-text"}>
+                        {product.stock > 0 ? "In Stock" : "Out of Stock"}
+                      </span>
                     </div>
+                    <div className="latest-buttons">
+  <button
+    className="latest-cart-btn"
+    onClick={(e) => handleAddToCart(product, e)}
+    disabled={product.stock <= 0} // ✅ disable if out of stock
+    style={product.stock <= 0 ? { cursor: "not-allowed", opacity: 0.5 } : {}}
+  >
+    ADD TO CART
+  </button>
+ <button
+  className="latest-buy-btn"
+  onClick={(e) => handleBuyNow(product._id, e)}
+  disabled={product.stock <= 0}
+  style={product.stock <= 0 ? { cursor: "not-allowed", opacity: 0.5 } : {}}
+>
+  BUY NOW
+</button>
+
+</div>
+
                   </div>
                 </div>
               )
             })}
           </div>
-
           <button className="latest-carousel-arrow latest-carousel-next" onClick={scrollRight}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <polyline points="9 18 15 12 9 6" />
             </svg>
           </button>
