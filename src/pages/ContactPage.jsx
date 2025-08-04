@@ -147,7 +147,7 @@ function ContactPage() {
                 <span className="payment-badge esewa">Esewa</span>
               </div>
               <div className="qr-code-container">
-                <img src="/public/esewa-qr.png" alt="eSewa QR Code" className="qr-code-image" />
+                <img src="/esewa-qr.png" alt="eSewa QR Code" className="qr-code-image" />
               </div>
               <div className="qr-code-details">
                 <p className="account-name">Dinesh Laal Shrestha</p>
@@ -161,7 +161,7 @@ function ContactPage() {
                 <span className="payment-badge bank">BANK</span>
               </div>
               <div className="qr-code-container">
-                <img src="/public/nimb-qr.jpg" alt="NIMB Bank QR Code" className="qr-code-image" />
+                <img src="/nimb-qr.jpg" alt="NIMB Bank QR Code" className="qr-code-image" />
               </div>
               <div className="qr-code-details">
                 <p className="account-name">Dinesh Laal Shrestha</p>
