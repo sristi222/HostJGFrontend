@@ -769,3 +769,13 @@
 .actions-cell {
   vertical-align: middle;
 }
+/* Stock text colors */
+.in-stock-text {
+  color: #60bb46; /* Green for in stock */
+  font-weight: 700;
+}
+
+.out-of-stock-text {
+  color: #ff4d4d; /* Red for out of stock */
+  font-weight: 700;
+}
