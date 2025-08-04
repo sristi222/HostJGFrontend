@@ -1,5 +1,4 @@
 "use client"
-
 import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { Table, LayoutGrid, Search, Plus, Edit, Trash2, Package, Filter } from "lucide-react"
@@ -17,7 +16,7 @@ function Products() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("https://jgenterprisebackend.onrender.com/api/products")
+        const res = await fetch("/api/products")
         const data = await res.json()
         if (data.success) {
           setProducts(data.products)
@@ -33,7 +32,7 @@ function Products() {
 
     const fetchCategories = async () => {
       try {
-        const res = await fetch("https://jgenterprisebackend.onrender.com/api/categories")
+        const res = await fetch("/api/categories")
         const data = await res.json()
         if (Array.isArray(data)) {
           setCategories(["All Categories", ...data.map((cat) => ({ id: cat._id, name: cat.name }))])
@@ -50,7 +49,7 @@ function Products() {
   const handleDeleteProduct = async (id) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
-        const res = await fetch(`https://jgenterprisebackend.onrender.com/api/products/${id}`, { method: "DELETE" })
+        const res = await fetch(`/api/products/${id}`, { method: "DELETE" })
         const result = await res.json()
         if (result.success) {
           setProducts(products.filter((product) => product._id !== id))
@@ -71,7 +70,6 @@ function Products() {
       categoryFilter === "All Categories" ||
       product.category?._id === categoryFilter ||
       product.category === categoryFilter
-
     return matchesSearch && matchesCategory
   })
 
@@ -89,14 +87,12 @@ function Products() {
 
   const ProductCard = ({ product }) => {
     const discount = calculateDiscount(product.price, product.salePrice)
-
     return (
       <div className="product-card">
         <div className="product-card-image">
           <img src={getImageUrl(product.imageUrl || product.image)} alt={product.name} className="card-thumbnail" />
           {product.onSale && <div className="card-sale-badge">SALE</div>}
         </div>
-
         <div className="product-card-content">
           <div className="product-card-header">
             <h3 className="card-product-name" title={product.name}>
@@ -112,12 +108,10 @@ function Products() {
               {product.displayInBestSelling && <span className="bestseller-badge">BESTSELLER</span>}
             </div>
           </div>
-
           <div className="card-category">
             {typeof product.category === "object" ? product.category.name : "Unknown Category"}
             {product.subcategory && <span className="subcategory"> ({product.subcategory})</span>}
           </div>
-
           <div className="card-price">
             {product.onSale && product.salePrice ? (
               <div className="price-container">
@@ -135,7 +129,12 @@ function Products() {
               </div>
             )}
           </div>
-
+          {/* NEW: Stock Status for Card View */}
+          <div className="card-product-stock">
+            <span className={product.stock > 0 ? "in-stock-text" : "out-of-stock-text"}>
+              {product.stock > 0 ? "In Stock" : "Out of Stock"}
+            </span>
+          </div>
           <div className="card-actions">
             <button
               className="edit-btn"
@@ -177,7 +176,6 @@ function Products() {
             </button>
           </div>
         </div>
-
         <div className="header-controls">
           <div className="search-filter-container">
             <div className="search-container">
@@ -216,7 +214,6 @@ function Products() {
           </Link>
         </div>
       </div>
-
       {loading ? (
         <div className="loading-container">
           <div className="loading-spinner"></div>
@@ -224,7 +221,23 @@ function Products() {
         </div>
       ) : (
         <>
-          {viewMode === "table" ? (
+          {filteredProducts.length === 0 ? (
+            <div className="no-products">
+              <div className="no-products-icon">
+                <Package size={48} />
+              </div>
+              <h3>No products found</h3>
+              <p>
+                {searchTerm || categoryFilter
+                  ? "Try adjusting your search or filter criteria"
+                  : "Add your first product to get started!"}
+              </p>
+              <Link to="/admin/products/add" className="add-first-product-btn">
+                <Plus size={16} />
+                <span>Add Product</span>
+              </Link>
+            </div>
+          ) : viewMode === "table" ? (
             <div className="table-container">
               <div className="table-wrapper">
                 <table className="products-table">
@@ -234,7 +247,7 @@ function Products() {
                       <th>Name</th>
                       <th>Category</th>
                       <th>Price</th>
-
+                      <th>Stock</th> {/* NEW: Stock Header */}
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -291,7 +304,12 @@ function Products() {
                               </div>
                             )}
                           </td>
-
+                          {/* NEW: Stock Status for Table View */}
+                          <td className="stock-cell">
+                            <span className={product.stock > 0 ? "in-stock-text" : "out-of-stock-text"}>
+                              {product.stock > 0 ? "In Stock" : "Out of Stock"}
+                            </span>
+                          </td>
                           <td className="actions-cell">
                             <div className="action-buttons">
                               <button
@@ -324,24 +342,6 @@ function Products() {
               {filteredProducts.map((product) => (
                 <ProductCard key={product._id} product={product} />
               ))}
-            </div>
-          )}
-
-          {filteredProducts.length === 0 && (
-            <div className="no-products">
-              <div className="no-products-icon">
-                <Package size={48} />
-              </div>
-              <h3>No products found</h3>
-              <p>
-                {searchTerm || categoryFilter
-                  ? "Try adjusting your search or filter criteria"
-                  : "Add your first product to get started!"}
-              </p>
-              <Link to="/admin/products/add" className="add-first-product-btn">
-                <Plus size={16} />
-                <span>Add Product</span>
-              </Link>
             </div>
           )}
         </>
