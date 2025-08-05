@@ -232,16 +232,22 @@ function ProductDetailPage() {
                   </div>
                 )}
                 <img
-                  key={selectedImage}
-                  src={getImageUrl(product.images?.[selectedImage] || product.imageUrl || product.image)}
-                  alt={getSafe(product.name)}
-                  loading="lazy"
-                  onError={(e) => {
-                    e.target.onerror = null
-                    e.target.src = "/placeholder.svg"
-                  }}
-                  style={{ objectFit: "cover", width: "100%", height: "100%" }}
-                />
+  key={selectedImage}
+  src={getImageUrl(product.images?.[selectedImage] || product.imageUrl || product.image)}
+  alt={getSafe(product.name)}
+  loading="lazy"
+  onError={(e) => {
+    e.target.onerror = null
+    e.target.src = "/placeholder.svg"
+  }}
+  style={{
+     objectFit: "contain",
+    width: "100%",
+    height: "auto",
+    maxHeight: "400px",
+  }}
+/>
+
               </div>
               {product.images?.length > 1 && (
                 <div className="pd-thumbnails">
