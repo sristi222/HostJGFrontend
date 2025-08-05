@@ -6,7 +6,7 @@ import { useParams, useNavigate } from "react-router-dom" // Add useNavigates
 
 const EditProduct = () => {
   const { id: productId } = useParams()
-  const navigate = useNavigate() // Initialize useNavigate
+  const navigate = useNavigate() // Initialize useNavigates
 
   const unitOptions = [
     { value: "kg", label: "Kg" },
