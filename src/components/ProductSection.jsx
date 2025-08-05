@@ -14,7 +14,9 @@ function ProductSection() {
   useEffect(() => {
     const fetchLatestProducts = async () => {
       try {
-        const res = await axios.get("https://jgenterprisebackend.onrender.com/api/products/latest")
+        const res = await axios.get("https://jgenterprisebackend.onrender.com/api/products/latest");
+console.log("📦 Latest products:", res.data);
+
         if (res.data.success) {
           setProducts(res.data.products)
         }
