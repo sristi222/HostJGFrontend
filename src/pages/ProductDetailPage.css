@@ -852,17 +852,17 @@
 }
 
 .pd-main-image {
+  .pd-main-image {
   width: 100%;
-  height: 250px;
+  max-height: 500px; /* ⬅ prevent image zoom/crop */
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
-  border: 1px solid rgba(255, 140, 66, 0.2);
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-  padding: 10px; /* Added padding for better spacing */
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: visible; /* ⬅ allow image to resize naturally */
+}
+
 }
 
 .pd-main-image img {
