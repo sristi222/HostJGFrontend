@@ -251,7 +251,7 @@ const EditProduct = () => {
     }
 
     try {
-      const res = await axios.put(`http://localhost:5000/api/products/${productId}`, formDataToSend, {
+      const res = await axios.put(`https://jgenterprisebackend.onrender.com/api/products/${productId}`, formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
