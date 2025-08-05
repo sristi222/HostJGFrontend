@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import axios from "axios"
-import { useParams, useNavigate } from "react-router-dom" // Add useNavigate
+import { useParams, useNavigate } from "react-router-dom" // Add useNavigates
 
 const EditProduct = () => {
   const { id: productId } = useParams()
