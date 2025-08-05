@@ -107,7 +107,7 @@ const EditProduct = () => {
     setFormData((prevFormData) => {
       const newFormData = {
         ...prevFormData,
-        [name]: type === "checkbox" ? (checked ? 1 : 0) : value, // Convert boolean to 1 or 0 for stock
+         [name]: type === "checkbox" ? !!checked : value,// Convert boolean to 1 or 0 for stock
       }
 
       // Recalculate discount if price or salePrice changes and onSale is true
@@ -251,7 +251,7 @@ const EditProduct = () => {
     }
 
     try {
-      const res = await axios.put(`https://jgenterprisebackend.onrender.com/api/products/${productId}`, formDataToSend, {
+      const res = await axios.put(`http://localhost:5000/api/products/${productId}`, formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
