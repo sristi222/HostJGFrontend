@@ -17,7 +17,7 @@ function EditProduct() {
     category: "",
     subcategory: "",
     price: "",
-    // Default quantity (shown on cards)
+    // Default quantityu (shown on cards)
     unit: "kg",
     defaultQuantity: "1",
     // Custom quantity options (shown on detail page)
