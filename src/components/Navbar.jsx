@@ -70,7 +70,7 @@ function Navbar() {
             </div>
             <div className="grocery-logo-text-wrapper">
   <div className="grocery-logo-text">JG Store</div>
-  <div className="grocery-logo-tagline">Dineshlaal's Shop</div>
+  <div className="grocery-logo-tagline">Dinesh Laal's Shop</div>
 </div>
 
           </Link>
