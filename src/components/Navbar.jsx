@@ -68,7 +68,11 @@ function Navbar() {
                 className="grocery-logo-image"
               />
             </div>
-            <div className="grocery-logo-text">JG Store</div>
+            <div className="grocery-logo-text-wrapper">
+  <div className="grocery-logo-text">JG Store</div>
+  <div className="grocery-logo-tagline">Dineshlaal's Shop</div>
+</div>
+
           </Link>
 
           {/* Search container is back inside main-navbar for desktop and mobile wrapping */}
