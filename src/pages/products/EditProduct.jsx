@@ -596,7 +596,7 @@ const EditProduct = () => {
         </div>
       </form>
     </div>
-  )
+  );
 }
 
-export default EditProduct
+export default EditProduct;
