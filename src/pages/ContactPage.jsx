@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import "./ContactPage.css"
+import "./ContactPage.css";
 
 function ContactPage() {
   return (
@@ -57,7 +57,7 @@ function ContactPage() {
                 </div>
                 <div className="contact-info-text">
                   <h3>Email</h3>
-                  <p>dineshlal.jgstore@gmail.com </p>
+                  <p>dineshlal.jgstore@gmail.com</p>
                 </div>
               </div>
 
@@ -121,20 +121,19 @@ function ContactPage() {
             <h2>Find Us</h2>
             <div className="map-container">
               <iframe
-  title="Shop Location"
-  width="100%"
-  height="100%"
-  style={{ border: 0 }}
-  loading="lazy"
-  allowFullScreen
-  referrerPolicy="no-referrer-when-downgrade"
-  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d299.6070777350183!2d85.30944906148522!3d27.706854062666604!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19c2f7450703%3A0xfab20cf918bdf0b2!2sDapxy!5e0!3m2!1sen!2snp!4v1744653628622!5m2!1sen!2snp"></iframe></div>
-  
+                title="Shop Location"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                loading="lazy"
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d299.6070777350183!2d85.30944906148522!3d27.706854062666604!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19c2f7450703%3A0xfab20cf918bdf0b2!2sDapxy!5e0!3m2!1sen!2snp!4v1744653628622!5m2!1sen!2snp"
+              ></iframe>
             </div>
           </div>
         </div>
 
-        {/* Separate Payment QR Section */}
         <div className="payment-qr-section">
           <div className="payment-qr-header">
             <h2>Payment Options</h2>
@@ -166,21 +165,19 @@ function ContactPage() {
               </div>
               <div className="qr-code-details">
                 <p className="account-name">Dinesh Laal Shrestha</p>
-                
               </div>
             </div>
           </div>
 
           <div className="payment-note">
             <p>
-              <strong>Note:</strong> After making payment, please send us a screenshot via WhatsApp for quick
-              confirmation and faster processing.
+              <strong>Note:</strong> After making payment, please send us a screenshot via WhatsApp for quick confirmation and faster processing.
             </p>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default ContactPage;
