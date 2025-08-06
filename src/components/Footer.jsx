@@ -37,6 +37,19 @@ function Footer() {
               We provide premium quality groceries at competitive prices. Our mission is to deliver fresh products right
               to your doorstep with exceptional service.
             </p>
+            <div className="footer-qr-section">
+  <div className="footer-qr-wrapper">
+    <img src="/nimb-qr.jpg" alt="NIMB QR" className="footer-qr" />
+    <div className="footer-qr-label"></div>
+  </div>
+  <div className="footer-qr-wrapper">
+    <img src="/esewa-qr.png" alt="Payment QR" className="footer-qr" />
+    <div className="footer-qr-label"></div>
+  </div>
+</div>
+
+
+
           </div>
 
           <div className="footer-column links-column">
@@ -125,7 +138,7 @@ function Footer() {
                   </svg>
                 </div>
                 <div className="contact-text">
-                  <p>dineshlaalshrestha@gmail.com</p>
+                  <p>dineshlal.jgstore@gmail.com</p>
                 </div>
               </div>
 
