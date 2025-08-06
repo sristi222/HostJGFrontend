@@ -46,7 +46,7 @@ const EditProduct = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/categories")
+        const res = await axios.get("https://jgenterprisebackend.onrender.com/api/categories")
         if (res.status === 200) {
           setCategories(res.data)
         } else {
@@ -68,7 +68,7 @@ const EditProduct = () => {
         return
       }
       try {
-        const response = await axios.get(`http://localhost:5000/api/products/${productId}`) // ✅ Fixed
+        const response = await axios.get(`https://jgenterprisebackend.onrender.com/api/products/${productId}`) // ✅ Fixed
         const data = response.data
         setFormData({
           name: data.name || "",
@@ -251,7 +251,7 @@ const EditProduct = () => {
     }
 
     try {
-      const res = await axios.put(`http://localhost:5000/api/products/${productId}`, formDataToSend, { // ✅ Fixed
+      const res = await axios.put(`https://jgenterprisebackend.onrender.com/api/products/${productId}`, formDataToSend, { // ✅ Fixed
         headers: {
           "Content-Type": "multipart/form-data",
         },
