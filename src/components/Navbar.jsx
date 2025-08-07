@@ -70,7 +70,10 @@ function Navbar() {
             </div>
             <div className="grocery-logo-text-wrapper">
   <div className="grocery-logo-text">JG Store</div>
-  <div className="grocery-logo-tagline">Dinesh Laal's Shop</div>
+  <div className="grocery-logo-tagline">
+  <span style={{ fontSize: "12px", opacity: 0.8 }}>By</span>{" "}
+  <span style={{ fontSize: "16px", fontWeight: 500 }}>Disnesh Laal Shrestha</span>
+</div>
 </div>
 
           </Link>
