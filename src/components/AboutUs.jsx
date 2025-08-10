@@ -152,7 +152,7 @@ function AboutUs() {
           <div className="about-cta-content">
             <h2>Visit Us Today</h2>
             <p>
-              Located in the heart of Kathmandu, Dinesh Laal's Shop is open seven days a week. Stop by and experience a
+              Located in the heart of Kathmandu, JG store is open seven days a week. Stop by and experience a
               legacy of quality, heritage, and hospitality.
             </p>
             <div className="about-cta-buttons">
