@@ -57,7 +57,7 @@ function ContactPage() {
                 </div>
                 <div className="contact-info-text">
                   <h3>Email</h3>
-                  <p>dineshlal.jgstore@gmail.com</p>
+                  <p>dineashlal.jgstore@gmail.com</p>
                 </div>
               </div>
 
