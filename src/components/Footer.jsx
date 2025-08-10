@@ -138,7 +138,7 @@ function Footer() {
                   </svg>
                 </div>
                 <div className="contact-text">
-                  <p>dineshlal.jgstore@gmail.com</p>
+                  <p>dineashlal.jgstore@gmail.com</p>
                 </div>
               </div>
 
