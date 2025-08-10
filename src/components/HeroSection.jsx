@@ -65,7 +65,7 @@ function HeroSection() {
               <div className="grocery-slide-content">
                 <h2 className="grocery-slide-title">{slide.title}</h2>
                 {slide.subtitle && <p className="grocery-slide-subtitle">{slide.subtitle}</p>}
-                <div className="grocery-store-name">Dinesh Laal's Shop</div>
+                <div className="grocery-store-name">Dineash Lal's Shop</div>
               </div>
             </div>
           ))}
