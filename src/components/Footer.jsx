@@ -160,7 +160,9 @@ function Footer() {
                   </svg>
                 </div>
                 <div className="contact-text">
-                  <p>Saturday - Friday: 9:00 AM - 7:00 PM</p>
+                  <p>Sunday - Friday: 9:30 AM - 1:30 PM, 6:00 PM - 9:00 PM</p>
+                  <p>Place Your Order Anytime — 24/7</p>
+                </div>
                 </div>
               </div>
             </div>
