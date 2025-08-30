@@ -13,6 +13,12 @@ function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [availableCategories, setAvailableCategories] = useState([])
 
+  // ✅ Capitalize first letter of the string
+  const capitalizeFirstLetter = (str) => {
+    if (!str) return ""
+    return str.charAt(0).toUpperCase() + str.slice(1)
+  }
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -26,11 +32,11 @@ function Navbar() {
       } catch (err) {
         console.error("Failed to load categories", err)
         const fallbackCategories = [
-          { _id: "cat1", name: "Fruits" },
-          { _id: "cat2", name: "Vegetables" },
-          { _id: "cat3", name: "Dairy & Eggs" },
-          { _id: "cat4", name: "Meat & Seafood" },
-          { _id: "cat5", name: "Bakery" },
+          { _id: "cat1", name: "fruits" },
+          { _id: "cat2", name: "vegetables" },
+          { _id: "cat3", name: "dairy & eggs" },
+          { _id: "cat4", name: "meat & seafood" },
+          { _id: "cat5", name: "bakery" },
         ]
         const formatted = fallbackCategories.map((cat) => ({ id: cat._id, name: cat.name }))
         setAvailableCategories(formatted)
@@ -69,16 +75,15 @@ function Navbar() {
               />
             </div>
             <div className="grocery-logo-text-wrapper">
-  <div className="grocery-logo-text">JG Store</div>
-  <div className="grocery-logo-tagline">
-  <span style={{ fontSize: "12px" }}>By</span>{" "}
-  <span style={{ fontSize: "12px", fontWeight: 500 }}>Dineash Lal Shrestha</span>
-</div>
-</div>
-
+              <div className="grocery-logo-text">JG Store</div>
+              <div className="grocery-logo-tagline">
+                <span style={{ fontSize: "12px" }}>By</span>{" "}
+                <span style={{ fontSize: "12px", fontWeight: 500 }}>Dineash Lal Shrestha</span>
+              </div>
+            </div>
           </Link>
 
-          {/* Search container is back inside main-navbar for desktop and mobile wrapping */}
+          {/* Search container */}
           <div className="grocery-search-container">
             <form onSubmit={handleSearch} className="grocery-search-bar">
               <SearchIcon className="grocery-search-icon" size={18} />
@@ -170,6 +175,7 @@ function Navbar() {
         </div>
       )}
 
+      {/* ✅ Categories Nav */}
       <div className="grocery-categories-nav">
         <div className="grocery-container">
           <nav className="grocery-categories-list">
@@ -183,7 +189,7 @@ function Navbar() {
                 className="grocery-category-item"
                 onClick={handleNavLinkClick}
               >
-                {category.name}
+                {capitalizeFirstLetter(category.name)}
               </Link>
             ))}
           </nav>
