@@ -17,6 +17,12 @@ function Categories() {
   const [viewMode, setViewMode] = useState("table") // table or cards
   const [searchTerm, setSearchTerm] = useState("")
 
+  // Utility: Capitalize first letter
+  const capitalizeFirstLetter = (str) => {
+    if (!str) return ""
+    return str.charAt(0).toUpperCase() + str.slice(1)
+  }
+
   const fetchCategories = async () => {
     try {
       const res = await fetch("https://jgenterprisebackend.onrender.com/api/categories")
@@ -78,11 +84,14 @@ function Categories() {
   const handleAddSubcategory = async (e) => {
     e.preventDefault()
     try {
-      const res = await fetch(`https://jgenterprisebackend.onrender.com/api/categories/${newSubcategory.categoryId}/subcategories`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: newSubcategory.name }),
-      })
+      const res = await fetch(
+        `https://jgenterprisebackend.onrender.com/api/categories/${newSubcategory.categoryId}/subcategories`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name: newSubcategory.name }),
+        },
+      )
       const updated = await res.json()
       setCategories(
         categories.map((c) => (c._id === updated._id ? updated : c)).sort((a, b) => a.name.localeCompare(b.name)),
@@ -107,7 +116,10 @@ function Categories() {
   const handleDeleteSubcategory = async (categoryId, subcategoryId, subcategoryName) => {
     if (!window.confirm(`Delete subcategory "${subcategoryName}"?`)) return
     try {
-      await fetch(`https://jgenterprisebackend.onrender.com/api/categories/${categoryId}/subcategories/${subcategoryId}`, { method: "DELETE" })
+      await fetch(
+        `https://jgenterprisebackend.onrender.com/api/categories/${categoryId}/subcategories/${subcategoryId}`,
+        { method: "DELETE" },
+      )
       fetchCategories()
     } catch (err) {
       console.error("Error deleting subcategory:", err)
@@ -134,7 +146,7 @@ function Categories() {
     <div className="category-card">
       <div className="category-card-header">
         <div className="category-card-title">
-          <h3>{category.name}</h3>
+          <h3>{capitalizeFirstLetter(category.name)}</h3>
           <span className={`status-badge ${category.status}`}>
             {category.status === "active" ? "Active" : "Inactive"}
           </span>
@@ -173,7 +185,7 @@ function Categories() {
         <div className="subcategories-list-card">
           {(category.subcategories || []).map((subcategory) => (
             <div className="subcategory-tag-card" key={subcategory._id}>
-              <span>{subcategory.name}</span>
+              <span>{capitalizeFirstLetter(subcategory.name)}</span>
               <button
                 className="delete-subcategory-card"
                 onClick={() => handleDeleteSubcategory(category._id, subcategory._id, subcategory.name)}
@@ -262,7 +274,7 @@ function Categories() {
                 {filteredCategories.map((category) => (
                   <tr key={category._id}>
                     <td className="name-cell">
-                      <span className="category-name">{category.name}</span>
+                      <span className="category-name">{capitalizeFirstLetter(category.name)}</span>
                     </td>
                     <td className="description-cell">
                       <span className="category-description">{category.description || "—"}</span>
@@ -271,7 +283,7 @@ function Categories() {
                       <div className="subcategories-list">
                         {(category.subcategories || []).map((subcategory) => (
                           <div className="subcategory-tag" key={subcategory._id}>
-                            <span>{subcategory.name}</span>
+                            <span>{capitalizeFirstLetter(subcategory.name)}</span>
                             <button
                               className="delete-subcategory"
                               onClick={() => handleDeleteSubcategory(category._id, subcategory._id, subcategory.name)}
