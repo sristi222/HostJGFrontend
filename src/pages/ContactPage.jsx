@@ -131,6 +131,7 @@ function ContactPage() {
                 referrerPolicy="no-referrer-when-downgrade"
                 src="https://www.google.com/maps/embed?pb=!4v1788864518904!6m8!1m7!1swjNMIxBg7gwS0d_Iz7XpPw!2m2!1d27.70845575518133!2d85.30857144567564!3f197.8419262561093!4f-17.540688067555124!5f0.5970117501821992"
               ></iframe>
+              </div>
           </div>
         </div>
 
