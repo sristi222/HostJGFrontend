@@ -129,9 +129,8 @@ function ContactPage() {
                 loading="lazy"
                 allowFullScreen
                 referrerPolicy="no-referrer-when-downgrade"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d299.6070777350183!2d85.30944906148522!3d27.706854062666604!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19c2f7450703%3A0xfab20cf918bdf0b2!2sDapxy!5e0!3m2!1sen!2snp!4v1744653628622!5m2!1sen!2snp"
+                src="https://www.google.com/maps/embed?pb=!4v1788864518904!6m8!1m7!1swjNMIxBg7gwS0d_Iz7XpPw!2m2!1d27.70845575518133!2d85.30857144567564!3f197.8419262561093!4f-17.540688067555124!5f0.5970117501821992"
               ></iframe>
-            </div>
           </div>
         </div>
 
